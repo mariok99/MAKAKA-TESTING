@@ -26,7 +26,7 @@ idDeUsuario :: Usuario -> Integer
 idDeUsuario (id, _) = id 
 
 nombreDeUsuario :: Usuario -> String
-nombreDeUsuario (_, nombre) = nombre 
+nombreDeUsuario (_, nombre) = nombre2
 
 usuarioDePublicacion :: Publicacion -> Usuario
 usuarioDePublicacion (u, _, _) = u
