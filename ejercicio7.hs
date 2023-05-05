@@ -29,9 +29,6 @@ likesDePublicacion (_, _, us) = us
 
 
 
-mostrar:: Usuario -> Usuario
-mostrar a = a
-
 usuario1 = (1, "Juan")
 usuario2 = (2, "Natalia")
 usuario3 = (3, "Pedro")
@@ -63,6 +60,7 @@ publicacion4_2 = (usuario4, "I am Bob", [])
 publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])
 
 
+
 usuariosA = [usuario1, usuario2, usuario3, usuario4]
 relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
 publicacionesA = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
@@ -73,5 +71,19 @@ relacionesB = [relacion1_2, relacion2_3]
 publicacionesB = [publicacion1_3, publicacion1_4, publicacion1_5, publicacion3_1, publicacion3_2, publicacion3_3]
 redB = (usuariosB, relacionesB, publicacionesB)
 
+pertenece:: (Eq t) => t -> [t] -> Bool
+pertenece n [] = False
+pertenece n (x:xs)  | n == x = True
+                    | otherwise = pertenece n (xs)
+
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
-publicacionesQueLeGustanA red us = publicaciones(red)
+publicacionesQueLeGustanA red user = publicacionesLista (publicaciones red) user
+
+
+publicacionesLista:: [Publicacion] -> Usuario -> [Publicacion]
+publicacionesLista [] user = []
+publicacionesLista (x:xs) user  | pertenece user (likesDePublicacion x) = x:publicacionesLista(xs) user
+                                | otherwise = publicacionesLista xs user
+
+
+
