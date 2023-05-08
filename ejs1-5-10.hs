@@ -62,8 +62,5 @@ quitar (x:xs) a
 eliminarRelaciones :: [Relacion] -> Usuario -> [Relacion]
 eliminarRelaciones [] _ = []
 eliminarRelaciones (rel:rels) us 
-    | us == primero || us == segundo = eliminarRelaciones rels us
+    | us == primero rel || us == segundo rel = eliminarRelaciones rels us
     | otherwise = rel : (eliminarRelaciones rels us)
-  where
-    primero = fst rel
-    segundo = snd rel
