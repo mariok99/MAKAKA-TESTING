@@ -4,8 +4,8 @@ amigosDe red us = aux_amigosDe (relaciones red) us
 
 aux_amigosDe :: [Relacion] -> Usuario -> [Usuario]
 aux_amigosDe [] _ = []
-aux_amigosDe (rel:rels) us | primero == us = (segundoElemDeRelacion rel):aux_amigosDe rels us
-                           | segundo == us = (primerElemDeRelacion rel):aux_amigosDe rels us  -- si ninguno se cumple, es que no era relacion del us -- 
+aux_amigosDe (rel:rels) us | primero == us = segundo : aux_amigosDe rels us
+                           | segundo == us = primero : aux_amigosDe rels us  -- si ninguno se cumple, es que no era relacion del us -- 
                            | otherwise =  aux_amigosDe rels us 
 
 primero :: (t,t) -> t
