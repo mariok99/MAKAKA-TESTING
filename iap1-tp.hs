@@ -6,7 +6,7 @@
 -- Integrante 3: Nombre Apellido, email, LU
 -- Integrante 4: Nombre Apellido, email, LU
 
-type Usuario = (Integer, String) -- (id, nombre)
+type Usuario = (Int, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
 type Publicacion = (Usuario, String, [Usuario]) -- (usuario que publica, texto publicacion, likes)
 type RedSocial = ([Usuario], [Relacion], [Publicacion])
@@ -22,7 +22,7 @@ relaciones (_, rs, _) = rs
 publicaciones :: RedSocial -> [Publicacion]
 publicaciones (_, _, ps) = ps
 
-idDeUsuario :: Usuario -> Integer
+idDeUsuario :: Usuario -> Int
 idDeUsuario (id, _) = id 
 
 nombreDeUsuario :: Usuario -> String
