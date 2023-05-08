@@ -35,7 +35,7 @@ aux_tieneSegFiel pubs = aparicionesDeLikeador (eliminarRepetidos (likesDePublica
 aparicionesDeLikeador :: [Usuario] -> [Usuario] -> Int -> Bool -- usl1 son los usuarios que le dieron like a la primera publicacion, usl2 son los usuario de la concatenarLikesDePublicaciones. -- 
 aparicionesDeLikeador [] _ _ = False -- si nadie dio like en la primera publicacion, entonces False -- 
 aparicionesDeLikeador _ [] _ = False -- si concateno todos los likes y es vacío, es que nadie dio like = False
-aparicionesDeLikeador  _ _ [] = False -- si no tenia ninguna publicacion en la red = Falso -- 
+aparicionesDeLikeador  _ _ 0 = False -- si no tenia ninguna publicacion en la red = Falso -- 
 aparicionesDeLikeador (usl1:ussl1) likesTotales pubsTotales | (cantidadDeApariciones usl1 likesTotales) == pubsTotales = True -- likesTotales es la lista concatenarLikesDePublicaciones -- 
                                                               | otherwise = aparicionesDeLikeador ussl1 likesTotales pubsTotales 
 
