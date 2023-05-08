@@ -26,7 +26,7 @@ idDeUsuario :: Usuario -> Int
 idDeUsuario (id, _) = id 
 
 nombreDeUsuario :: Usuario -> String
-nombreDeUsuario (_, nombre) = nombre2
+nombreDeUsuario (_, nombre) = nombre
 
 usuarioDePublicacion :: Publicacion -> Usuario
 usuarioDePublicacion (u, _, _) = u
