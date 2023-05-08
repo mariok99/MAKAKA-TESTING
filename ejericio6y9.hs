@@ -30,9 +30,6 @@ primeraPublicacion (x:xs) = x
 -- ejercicio 9 -- 
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
 tieneUnSeguidorFiel red us = aux1_tieneUnSeguidorFiel (publicacionesDe red us) us 
- 
-
-
 
 aux1_tieneUnSeguidorFiel :: [Publicacion] -> Usuario -> Bool --(pub:pubs) es la lista de publicaciones de us
 aux1_tieneUnSeguidorFiel [] _ = False
@@ -61,35 +58,23 @@ concatenarLikesDePublicaciones [] us = []
 concatenarLikesDePublicaciones (pub:pubs) us = eliminarRepetidos (likesDePublicacion pub) ++ 
                                                concatenarLikesDePublicaciones pubs us -- agregué eliminar repetidos por si alguien dio like DOS VECES -- 
 
+-- Auxiliares universales -- 
 
 pertenece :: (Eq t) => t -> [t] -> Bool
 pertenece t [] = False 
 pertenece t x = t == head x || (pertenece t (tail x))
-
-ultimo :: [t] -> t
-ultimo x | (longitud x) == 1 = (head x)
-         | otherwise = ultimo (tail x) 
-
-principio :: [a] -> [a]
-principio (x:xs) | longitud (x:xs) == 1 = []
-                 | otherwise = x:(principio xs)
-                 
+               
 longitud :: [t] -> Int
 longitud [] = 0
 longitud (x:xs) = 1 + longitud xs
 
 eliminarRepetidos :: (Eq t) => [t] -> [t]
 eliminarRepetidos [] = []
-eliminarRepetidos (x:xs) | head (sacarSiPrimerEsRepetido (x:xs)) /= x = x:eliminarRepetidos xs
-                         | otherwise = head (sacarSiPrimerEsRepetido (x:xs)): eliminarRepetidos ((quitarTodos (head (sacarSiPrimerEsRepetido (x:xs)))) (x:xs))
+eliminarRepetidos (x:xs) | not (pertenece x xs) = x : eliminarRepetidos xs
+                         | otherwise = x : eliminarRepetidos (quitarTodos x xs)
 
 quitarTodos :: (Eq t) => t -> [t] -> [t]
 quitarTodos t [] = []
-quitarTodos t (x:xs) | t == x = quitarTodos t xs
-                     | otherwise = (x:quitarTodos t xs)
-
-sacarSiPrimerEsRepetido :: (Eq t) => [t] -> [t]
-sacarSiPrimerEsRepetido (x:xs) | not (pertenece x xs) = (x:xs) -- en realidad si no hay ningún repetido, deja la secuencia tal como estaba -- 
-                        | pertenece x xs = [x] -- si el primero es repetido, lo separa en una lista con el repetido como único enlemento -- 
-                        | otherwise = sacarSiPrimerEsRepetido xs               
-
+quitarTodos t (x:xs) | not (pertenece t (x:xs)) = (x:xs)
+                     | t == x = quitarTodos t xs
+                     | otherwise = x : quitarTodos t xs
