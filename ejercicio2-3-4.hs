@@ -1,7 +1,26 @@
+-- 2 -- 
+amigosDe :: RedSocial -> Usuario -> [Usuario]
+amigosDe red us = aux_amigosDe (relaciones red) us
+
+aux_amigosDe :: [Relacion] -> Usuario -> [Usuario]
+aux_amigosDe [] _ = []
+aux_amigosDe (rel:rels) us | (primero rel) == us = (segundo rel) : (aux_amigosDe rels us)
+                           | (segundo rel) == us = (primero rel) : (aux_amigosDe rels us)  -- si ninguno se cumple, es que no era relacion del us -- 
+                           | otherwise =  aux_amigosDe rels us 
+
+primero :: (t,t) -> t
+primero (x, y) = x
+
+segundo :: (t,t) -> t
+segundo (x, y) = y
+
 -- 3 -- 
+
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
 cantidadDeAmigos red us  =  longitud (amigosDe (red) us)
+
 -- 4 --
+
 usuarioConMasAmigos :: RedSocial -> Usuario
 usuarioConMasAmigos red = buscarUsuarioMax red (x:xs) m 
   where
