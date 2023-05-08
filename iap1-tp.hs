@@ -1,9 +1,9 @@
 -- Completar con los datos del grupo
 --
--- Nombre de Grupo: xx
+-- Nombre de Grupo: operacionHaskell
 -- Integrante 1: Nombre Apellido, email, LU
 -- Integrante 2: Nombre Apellido, email, LU
--- Integrante 3: Nombre Apellido, email, LU
+-- Integrante 3: Joaquín Lozano, joaquin.lozano.trabajo@gmail.com, 649/23
 -- Integrante 4: Nombre Apellido, email, LU
 
 type Usuario = (Int, String) -- (id, nombre)
