@@ -49,13 +49,13 @@ publicacion1_4 = (usuario1, "Este es mi cuarto post", [])
 publicacion1_5 = (usuario1, "Este es como mi quinto post", [usuario5])
 
 publicacion2_1 = (usuario2, "Hello World", [usuario4])
-publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario4])
+publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario3])
 
 publicacion3_1 = (usuario3, "Lorem Ipsum", [])
 publicacion3_2 = (usuario3, "dolor sit amet", [usuario2])
 publicacion3_3 = (usuario3, "consectetur adipiscing elit", [usuario2, usuario5])
 
-publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
+publicacion4_1 = (usuario4, "I am Alice. Not", [usuario2, usuario2])
 publicacion4_2 = (usuario4, "I am Bob", [])
 publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])
 
@@ -87,3 +87,10 @@ publicacionesLista (x:xs) user  | pertenece user (likesDePublicacion x) = x:publ
 
 
 
+lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
+lesGustanLasMismasPublicaciones red user1 user2 = mismosElementos (publicacionesQueLeGustanA red user1) (publicacionesQueLeGustanA red user2)
+
+mismosElementos::(Eq t) => [t] -> [t] -> Bool
+mismosElementos [] _ = True
+mismosElementos (x:xs) ts   | pertenece x ts = mismosElementos xs ts
+                            | otherwise = False
