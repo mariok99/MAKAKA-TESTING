@@ -1,11 +1,5 @@
 -- 3 -- 
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
-cantidadDeAmigos red us  =  longitud (amigosDe(red) us)
-
-
--- 4 -- 
--- 3 -- 
-cantidadDeAmigos :: RedSocial -> Usuario -> Int
 cantidadDeAmigos red us  =  longitud (amigosDe (red) us)
 -- 4 --
 usuarioConMasAmigos :: RedSocial -> Usuario
