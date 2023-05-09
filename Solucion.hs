@@ -141,7 +141,7 @@ publicacionesQueLeGustanA red us = pubsLikeadas (publicaciones red) us
 
 pubsLikeadas:: [Publicacion] -> Usuario -> [Publicacion]
 pubsLikeadas [] _ = []
-pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = us : (pubsLikeadas pubs us)
+pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = pub : (pubsLikeadas pubs us)
                             | otherwise = pubsLikeadas pubs us
                           
 -- 8 --
