@@ -110,7 +110,7 @@ buscarUsuarioMax red (us:users) m | (cantidadDeAmigos red us) == m = us
 
 listaCantDeAmigos :: RedSocial -> [Usuario] -> [Int]
 listaCantDeAmigos red [] = []  
-listaCantDeAmigos red (us:users) = cantidadDeAmigos red us : listaCantDeAmigos red users 
+listaCantDeAmigos red (us:users) = (cantidadDeAmigos red us) : (listaCantDeAmigos red users) 
 
 maximo :: [Int] -> Int
 maximo (x:[]) = x 
@@ -129,7 +129,7 @@ mayor x y | x >= y = x
 estaRobertoCarlos :: RedSocial -> Bool
 estaRobertoCarlos ((us:users),rels,pubs) | (us:users) == [] = False
                                          | (cantidadDeAmigos red us) > (10^6) = True
-                                         | otherwise = estaRobertoCarlos (uses,rels,pubs)
+                                         | otherwise = estaRobertoCarlos (users,rels,pubs)
                                          where red = ((us:users),rels,pubs)
 
 -- 7 --
@@ -141,7 +141,7 @@ publicacionesQueLeGustanA red us = pubsLikeadas (publicaciones red) us
 
 pubsLikeadas:: [Publicacion] -> Usuario -> [Publicacion]
 pubsLikeadas [] _ = []
-pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = x : (pubsLikeadas pubs us)
+pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = us : (pubsLikeadas pubs us)
                             | otherwise = pubsLikeadas pubs us
                           
 -- 8 --
