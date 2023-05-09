@@ -161,20 +161,21 @@ incluido (x:xs) ys | pertenece x ys = mismosElementos xs ys
                    
 -- 10 --
 
-{- existeSecuenciaDeAmigos determina si us1 y us2 son amigos
- - De no serlos, se busca si están "relacionados lejanamente".
- - Es decir, va a buscar entre los amigos del primero. Si no encuentra
- - amigos de us2, va a buscar en los amigos de amigos (y así recursivamente).
- - Para no quedarse en un bucle, se eliminan de la red los usuarios que
- - no son amigos de us2. En el peor de los casos, se llega a una lista vacía
- - y se devuelve False. -}
+ {- existeSecuenciaDeAmigos determina si un usuario está relacionado con "us2".
+  - Dicho usuario puede ser "us1". Si no lo es, se busca entre los "amigos de us1".
+  - Se repite recursivamente con los "amigos de los amigos", en cada paso eliminando de la 
+  - red quienes no son amigos de us2. Si se llega a algún "N-ésimo usuario" que satisface:
+  - es amigo del "usuario anterior" y es amigo de "us2", entonces se puede concluir 
+  - que es posible armar la cadena [us1,amigoDeUs1,amigoDeAmigoDeUs1,...,amigoDelAnterior,us2],
+  - devolviendo True. De lo contrario, no existe una secuencia que sea solución 
+  - del problema, devolviendo False. -}
 
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos red us1 us2 = (pertenece us1 amigosU2) || (estanRelacionados red amigosU1 amigosU2)
   where 
     amigosU1 = amigosDe red us1
     amigosU2 = amigosDe red us2
--- No se elimina us1 por si los parámetros de entrada son el mismo. --
+-- No se elimina us1 por si los parámetros de entrada son iguales. --
 
 estanRelacionados :: RedSocial -> [Usuario] -> [Usuario] -> Bool
 estanRelacionados _ [] _ = False
