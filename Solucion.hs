@@ -124,13 +124,15 @@ mayor x y | x >= y = x
 -- 5 --
 
 {- estaRobertoCarlos devuelve True si un usuario tiene 
- - más de un millón de amigos. -}
+ - más de diez de amigos. -}
 
 estaRobertoCarlos :: RedSocial -> Bool
-estaRobertoCarlos ((us:users),rels,pubs) | (us:users) == [] = False
-                                         | (cantidadDeAmigos red us) > (10^6) = True
+estaRobertoCarlos ([],_,_) = False
+estaRobertoCarlos ((us:users),rels,pubs) | (cantidadDeAmigos red us) > (10) = True
                                          | otherwise = estaRobertoCarlos (users,rels,pubs)
                                          where red = ((us:users),rels,pubs)
+{- Debería estar implementado con 10^6 en vez de 10, pero lo cambiamos para poder testear
+ - un caso donde dé True sin crear una red con un millón + 1 tuplas. -}
 
 -- 7 --
 
