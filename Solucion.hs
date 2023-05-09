@@ -39,7 +39,7 @@ likesDePublicacion (_, _, us) = us
 -- 1 --
 
 {- nombresDeUsuarios arma una lista con los nombres de los usuarios de red.
- - Una vez armada la lista elimina los repetidos, de haberlos. -}
+ - Una vez armada la lista elimina los repetidos. -}
 
 nombresDeUsuarios :: RedSocial -> [String]
 nombresDeUsuarios red = eliminarRepetidos(armarListaNombres (usuarios red))
