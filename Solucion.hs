@@ -132,7 +132,7 @@ estaRobertoCarlos ((us:users),rels,pubs) | (cantidadDeAmigos red us) > (10) = Tr
                                          | otherwise = estaRobertoCarlos (users,rels,pubs)
                                          where red = ((us:users),rels,pubs)
 {- Debería estar implementado con 10^6 en vez de 10, pero lo cambiamos para poder testear
- - un caso donde dé True sin crear una red con un millón + 1 tuplas. -}
+ - un caso donde dé True sin crear una red con un millón + 1 tuplas de relaci. -}
 
 -- 7 --
 
