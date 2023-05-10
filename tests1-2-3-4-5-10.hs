@@ -12,7 +12,7 @@ usJ11=(11,"Leopoldo")
 
 usNomRep=(12,"Marcelo")
 
-ususariosRobertoTrue=[usJ1,usJ2,usJ3,usJ4,usJ5,usJ6,usJ7,usJ8,usJ9,usJ10,usJ11]
+ususariosRobertoTrue=[usJ1,usJ2,usJ3,usJ4,usJ5,usJ6,usJ7,usJ8,usJ9,usJ10,usJ11,usJ12]
 usuariosJ1=[usJ1,usJ3,usJ7]
 usuariosJ2=[usJ1,usJ2,usJ4,usJ5,usJ7,usJ11]
 usuariosNomRep=[usJ1,usJ2,usNomRep]
@@ -21,7 +21,7 @@ relacionesJ1=[(usJ1,usJ3)]
 relacionesJ2=[(usJ1,usJ4),(usJ2,usJ4),(usJ5,usJ2),(usJ4,usJ7),(usJ5,usJ11)]
 relacionesJ3=[(usJ1,usJ4),(usJ2,usJ4),(usJ5,usJ2),(usJ5,usJ11)]
 relacionesJ4=[(usJ2,usJ5),(usJ1,usJ7)]
-relacionesRobertoTrue=[(usJ1,usJ2),(usJ1,usJ3),(usJ1,usJ4),(usJ1,usJ5),(usJ1,usJ6),(usJ1,usJ7),(usJ1,usJ8),(usJ1,usJ9),(usJ1,usJ10),(usJ1,usJ11)]
+relacionesRobertoTrue=[(usJ1,usJ2),(usJ1,usJ3),(usJ1,usJ4),(usJ1,usJ5),(usJ1,usJ6),(usJ1,usJ7),(usJ1,usJ8),(usJ1,usJ9),(usJ1,usJ10),(usJ1,usJ11),(usJ1,usJ12)]
 
 redUsVacio=([],[],[])
 redRelsVacio=(usuariosJ1,[],[])
