@@ -18,27 +18,31 @@ usJ12=(12,"Alfredo")
 
 usNomRep=(777,"Marcelo")
 
-ususariosRobertoTrue=[usJ1,usJ2,usJ3,usJ4,usJ5,usJ6,usJ7,usJ8,usJ9,usJ10,usJ11,usJ12]
 usuariosJ1=[usJ1,usJ3,usJ7]
 usuariosJ2=[usJ1,usJ2,usJ4,usJ5,usJ7,usJ11]
-usuariosNomRep=[usJ1,usJ2,usNomRep]
 
 relacionesJ1=[(usJ1,usJ3)]
 relacionesJ2=[(usJ1,usJ4),(usJ2,usJ4),(usJ5,usJ2),(usJ4,usJ7),(usJ5,usJ11)]
 relacionesJ3=[(usJ1,usJ4),(usJ2,usJ4),(usJ5,usJ2),(usJ5,usJ11)]
 relacionesJ4=[(usJ2,usJ5),(usJ1,usJ7)]
-relacionesRobertoTrue=[(usJ1,usJ2),(usJ1,usJ3),(usJ1,usJ4),(usJ1,usJ5),(usJ1,usJ6),(usJ1,usJ7),(usJ1,usJ8),(usJ1,usJ9),(usJ1,usJ10),(usJ1,usJ11),(usJ1,usJ12)]
-
-redUsVacio=([],[],[])
-redRelsVacio=(usuariosJ1,[],[])
 
 redJ1=(usuariosJ1,relacionesJ1,[])
 redJ2=(usuariosJ2,relacionesJ2,[])
 redJ3=(usuariosJ2,relacionesJ3,[])
 redJ4=(usuariosJ2,relacionesJ4,[])
 
+ususariosRobertoTrue=[usJ1,usJ2,usJ3,usJ4,usJ5,usJ6,usJ7,usJ8,usJ9,usJ10,usJ11,usJ12]
+usuariosNomRep=[usJ1,usJ2,usNomRep]
+
+relacionesRobertoTrue=[(usJ1,usJ2),(usJ1,usJ3),(usJ1,usJ4),(usJ1,usJ5),(usJ1,usJ6),(usJ1,usJ7),(usJ1,usJ8),(usJ1,usJ9),(usJ1,usJ10),(usJ1,usJ11),(usJ1,usJ12)]
+
+redUsVacio=([],[],[])
+redRelsVacio=(usuariosJ1,[],[])
+
 redRobertoTrue=(usuariosJ1,relacionesRobertoTrue,[])
 redNomRep=(usuariosNomRep,[],[])
+
+-- Test Suites --
 
 tests = test [testSuiteEj1,testSuiteEj2,testSuiteEj3,testSuiteEj4,testSuiteEj5,testSuiteEj10]
 
@@ -49,8 +53,6 @@ testSuiteEj1 = test [
   " Caso 2: lista de usuarios sin nombres repetidos" ~: (nombresDeUsuarios redJ1) ~?= ["Marcelo","Pepe","Ronaldo"],
   " Caso 3: lista de usuarios con nombres repetidos" ~: (nombresDeUsuarios redNomRep) ~?= ["Marcelo","Carlos"]
  ]
-
-
 
 testSuiteEj2 = test [
   " Caso 1: lista relaciones vacía" ~: (amigosDe redRelsVacio usJ1) ~?= [],
