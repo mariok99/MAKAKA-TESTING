@@ -188,7 +188,7 @@ estanRelacionados red (us:users) amigosU2 = (pertenece us amigosU2) || (estanRel
 
 eliminarUsuario :: RedSocial -> Usuario -> RedSocial
 eliminarUsuario (users,rels,_) us = ((quitarTodos us users),(eliminarRelaciones rels us),[])
--- eliminarUsuario es auxiliar de existeSecuenciaDeAmigos. Como dicha funci
+-- eliminarUsuario es auxiliar de existeSecuenciaDeAmigos. Como dicha función no usa las publicaciones, siempre devuelve [] en su lugar. --
 
 eliminarRelaciones :: [Relacion] -> Usuario -> [Relacion]
 eliminarRelaciones [] _ = []
