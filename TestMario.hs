@@ -3,6 +3,7 @@ import Solucion
 import TestCatedra
 import Test.HUnit 
 import Test.HUnit (runTestTT)
+import Ejercicio7y8
 
 testSuitEj6 = test [
     "Caso1 sin publicaciones con usuarios" ~: (publicacionesDe redM1 usuario1) ~?= [],
@@ -11,9 +12,13 @@ testSuitEj6 = test [
     "Caso4 us tiene pubs y son todas de la red" ~: (publicacionesDe redM5 usuario9) ~?= publicacionesM5, 
     "Caso5 hay pubs pero ninguno de us" ~: (publicacionesDe redM6 usuario9) ~?= []
   ]
-
 run1 = runTestTT testSuitEj6
 
+testSuitEj7 = test [
+    "Caso1 red con pubs y like de usuario" ~: (publicacionesQueLeGustanA redU userU1) ~?= [publicacionU1_2, publicacionU1_3]
+     
+    ]
+run2 = runTestTT testSuitEj7
 -- casos de test publicacionesDe --
 
 -- redM1 sin publicaciones con usuarios --

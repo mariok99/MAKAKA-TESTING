@@ -1,4 +1,6 @@
+module Solucion where
 -- Completar con los datos del grupo
+
 --
 -- Nombre de Grupo: operacionHaskell
 -- Integrante 1: Andrea Ramon Barboza Franco, franco.barboza@hotmail.com, 176/20
@@ -188,7 +190,7 @@ aparicionesDeLikeador _ [] _ = False -- si concateno todos los likes y es vacío
 aparicionesDeLikeador (usl1:ussl1) likesTotales pubsTotales | (cantidadDeApariciones usl1 likesTotales) == pubsTotales = True -- likesTotales es la lista concatenarLikesDePublicaciones -- 
                                                             | otherwise = aparicionesDeLikeador ussl1 likesTotales pubsTotales 
 
-cantidadDeApariciones :: Usuario -> [UAjerdrezZZZ123.suario] -> Int -- usX es un usuario genérico -- 
+cantidadDeApariciones :: Usuario -> [Usuario] -> Int -- usX es un usuario genérico -- 
 cantidadDeApariciones _ [] = 0
 cantidadDeApariciones usX (us:users) | usX == us = 1 + (cantidadDeApariciones usX users) 
                                      | otherwise = cantidadDeApariciones usX users 

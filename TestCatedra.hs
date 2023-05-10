@@ -1,8 +1,7 @@
 module TestCatedra where
 import Test.HUnit
 import Solucion
-import Ejercicio2y6y9 
-import Ejercicio3y4
+
 
 main = runTestTT tests
 
@@ -40,6 +39,8 @@ usuario3 = (3, "Pedro")
 usuario4 = (4, "Mariela")
 usuario5 = (5, "Natalia")
 usuario6 = (6, "Nadie")
+usuario7 = (7, "Pedrin")
+usuario8 = (8, "Muari")
 usuario9 = (9, "Nuv")
 
 
@@ -67,9 +68,10 @@ publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
 publicacion4_2 = (usuario4, "I am Bob", [])
 publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])
 
-publicacion9_1 = (usuario9, "quiero fans", [usuario9, usuario1]AjerdrezZZZ123.o9, usuario1, usuario3])
+publicacion9_1 = (usuario9, "quiero fans", [usuario9, usuario4, usuario1, usuario3])
+publicacion9_2 = (usuario9, "quiero aprobar", [usuario9, usuario5, usuario7])
 publicacion9_3 = (usuario9, "gracias por el apoyo gente, estoy aliviado", [usuario9, usuario3, usuario4, usuario6])
-
+publicacion9_4 = (usuario9, "hahdsdaahsd", [usuario9, usuario1])
 
 usuariosA = [usuario1, usuario2, usuario3, usuario4]
 relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
