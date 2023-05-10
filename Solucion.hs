@@ -167,12 +167,12 @@ pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = pub : (pub
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones red us1 us2 = mismosElementos (publicacionesQueLeGustanA red us1) (publicacionesQueLeGustanA red us2)
 
---mismosElementos :: (Eq t) => [t] -> [t] -> Bool
---mismosElementos xs ys = (incluido xs ys) && (incluido ys xs)
-
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
-mismosElementos [] _ = True
-mismosElementos (x:xs) ys | pertenece x ys = mismosElementos xs ys
+mismosElementos xs ys = (incluido xs ys) && (incluido ys xs) -- dos conjuntos A,B tienen los mismos elementos si B incluye a A y A incluye a B. --
+
+incluido :: (Eq t) => [t] -> [t] -> Bool
+incluido [] _ = True
+incluido (x:xs) ys | pertenece x ys = mismosElementos xs ys
                           | otherwise = False
 
 -- 9 -- 
