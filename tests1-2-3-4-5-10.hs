@@ -1,6 +1,8 @@
 import Solucion
 import Test.HUnit
 
+-- RECORDATORIO: Al descargar de github, es necesario agregar "," al final de cada renglón de los tests.
+
 usJ1=(1,"Marcelo")
 usJ2=(2,"Carlos")
 usJ3=(3,"Pepe")
