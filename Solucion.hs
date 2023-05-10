@@ -212,11 +212,11 @@ concatenarLikesDePublicaciones (pub:pubs) = eliminarRepetidos (quitarTodos (usua
   - del problema, devolviendo False. -}
 
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
-existeSecuenciaDeAmigos red us1 us2 = (pertenece us1 amigosU2) || (estanRelacionados red amigosU1 amigosU2)
+existeSecuenciaDeAmigos red us1 us2 = (pertenece us1 amigosU2) || (estanRelacionados redSiguiente amigosU1 amigosU2)
   where 
     amigosU1 = amigosDe red us1
     amigosU2 = amigosDe red us2
--- No se elimina us1 por si los parámetros de entrada son iguales. --
+    redSiguiente = eliminarUsuario red us1
 
 estanRelacionados :: RedSocial -> [Usuario] -> [Usuario] -> Bool
 estanRelacionados _ [] _ = False
