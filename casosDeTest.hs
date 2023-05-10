@@ -1,6 +1,5 @@
-module Test (redA,redB,redC,redD,redW,redX,redY) where
-
-
+module CasosDeTest where
+--module CasosDeTest (redA,redB,redC,redD,redW,redX,redY) where
 usuario1 :: (Integer, String)
 usuario1 = (1, "Juan")
 usuario2 :: (Integer, String)
@@ -11,6 +10,8 @@ usuario4 :: (Integer, String)
 usuario4 = (4, "Mariela")
 usuario5 :: (Integer, String)
 usuario5 = (5, "Natalia")
+usuario6 = (6, "Nadie")
+usuario9 = (9, "Nuv")
 
 relacion1_2 = (usuario1, usuario2)
 relacion1_3 :: ((Integer, String), (Integer, String))
@@ -60,8 +61,12 @@ publicacion4_4 = (usuario4, "Que funcione plis", [])
 publicacion4_5 = (usuario4, "SIUIUIUIU", [])
 publicacion4_6 = (usuario4, "otro ejemplo sin likes", [])
 
+publicacion9_1 = (usuario9, "quiero fans", [usuario9, usuario1])
+publicacion9_2 = (usuario9, "por favor quiero atencion", [usuario9, usuario1, usuario3])
+publicacion9_3 = (usuario9, "gracias por el apoyo gente, estoy aliviado", [usuario9, usuario3, usuario4, usuario6])
+
 usuariosA :: [(Integer, String)]
-usuariosA = [usuario1, usuario2, usuario3, usuario4]
+usuariosA = [usuario1, usuario2, usuario3, usuario4, usuario6] 
 relacionesA :: [((Integer, String), (Integer, String))]
 relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
 publicacionesA :: [((Integer, String), String, [(Integer, String)])]
@@ -92,3 +97,29 @@ publicacionesX = [publicacion3_2, publicacion3_3,publicacion4_4, publicacion4_5,
 redY= (usuariosA, relacionesY, publicacionesX)
 publicacionesY = [publicacion3_2, publicacion3_3,publicacion4_3, publicacion4_4, publicacion4_5, publicacion4_6]
 relacionesY = [relacion1_3, relacion1_4]
+
+-- red F --
+redF = [usuariosF, relacionesF,publicacionesF ]
+
+usuariosF = []
+relacionesF = []
+publicacionesF = []
+
+-- red G1 --
+redG1 = (usuariosG1, relacionesG1, publicacionesG1)
+
+usuariosG1 = [usuario1, usuario2, usuario4]
+relacionesG1 = [relacion1_2, relacion2_3, relacion3_4]
+publicacionesG1 = [publicacion1_3, publicacion1_6, publicacion3_2, publicacion4_1, publicacion4_2, publicacion4_3]
+
+-- red G2 --
+redG2 = (usuariosG2, relacionesG2, publicacionesG2)
+
+usuariosG2 = [usuario1, usuario2, usuario4]
+relacionesG2 = [relacion1_2, relacion2_3]
+publicacionesG2 = []
+
+-- red H (usuario9 se dio autolike a todas sus publicaciones) -- 
+redH = (usuariosH, relacionesA, publicacionesH)
+usuariosH = [usuario1, usuario9, usuario3, usuario4, usuario6]
+publicacionesH = [publicacion9_1, publicacion9_2, publicacion9_3, publicacion1_1, publicacion1_2, publicacion4_1]
