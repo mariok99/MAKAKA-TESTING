@@ -172,8 +172,8 @@ mismosElementos xs ys = (incluido xs ys) && (incluido ys xs) -- dos conjuntos A,
 
 incluido :: (Eq t) => [t] -> [t] -> Bool
 incluido [] _ = True
-incluido (x:xs) ys | pertenece x ys = mismosElementos xs ys
-                          | otherwise = False
+incluido (x:xs) ys | pertenece x ys = incluido xs ys 
+                   | otherwise = False
 
 -- 9 -- 
 
