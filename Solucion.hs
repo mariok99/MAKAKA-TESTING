@@ -2,7 +2,7 @@
 --
 -- Nombre de Grupo: operacionHaskell
 -- Integrante 1: Andrea Ramon Barboza Franco, franco.barboza@hotmail.com, 176/20
--- Integrante 2: Nahuel Prieto, nahuel.rlz@gmail.com, LU
+-- Integrante 2: Nahuel Prieto, nahuel.rlz@gmail.com, 646/20
 -- Integrante 3: Joaquín Lozano, joaquin.lozano.trabajo@gmail.com, 649/23
 -- Integrante 4: Mario Alejandro Livia Auqui, marioalelivia@gmail.com, 642/23
 
@@ -165,13 +165,13 @@ pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = pub : (pub
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones red us1 us2 = mismosElementos (publicacionesQueLeGustanA red us1) (publicacionesQueLeGustanA red us2)
 
-mismosElementos :: (Eq t) => [t] -> [t] -> Bool
-mismosElementos xs ys = (incluido xs ys) && (incluido ys xs)
+--mismosElementos :: (Eq t) => [t] -> [t] -> Bool
+--mismosElementos xs ys = (incluido xs ys) && (incluido ys xs)
 
-incluido :: (Eq t) => [t] -> [t] -> Bool
-incluido [] _ = True
-incluido (x:xs) ys | pertenece x ys = mismosElementos xs ys
-                   | otherwise = False
+mismosElementos :: (Eq t) => [t] -> [t] -> Bool
+mismosElementos [] _ = True
+mismosElementos (x:xs) ys | pertenece x ys = mismosElementos xs ys
+                          | otherwise = False
 
 -- 9 -- 
 
@@ -188,7 +188,7 @@ aparicionesDeLikeador _ [] _ = False -- si concateno todos los likes y es vacío
 aparicionesDeLikeador (usl1:ussl1) likesTotales pubsTotales | (cantidadDeApariciones usl1 likesTotales) == pubsTotales = True -- likesTotales es la lista concatenarLikesDePublicaciones -- 
                                                             | otherwise = aparicionesDeLikeador ussl1 likesTotales pubsTotales 
 
-cantidadDeApariciones :: Usuario -> [Usuario] -> Int -- usX es un usuario genérico -- 
+cantidadDeApariciones :: Usuario -> [UAjerdrezZZZ123.suario] -> Int -- usX es un usuario genérico -- 
 cantidadDeApariciones _ [] = 0
 cantidadDeApariciones usX (us:users) | usX == us = 1 + (cantidadDeApariciones usX users) 
                                      | otherwise = cantidadDeApariciones usX users 

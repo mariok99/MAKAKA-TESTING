@@ -67,8 +67,7 @@ publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
 publicacion4_2 = (usuario4, "I am Bob", [])
 publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])
 
-publicacion9_1 = (usuario9, "quiero fans", [usuario9, usuario1])
-publicacion9_2 = (usuario9, "por favor quiero atencion", [usuario9, usuario1, usuario3])
+publicacion9_1 = (usuario9, "quiero fans", [usuario9, usuario1]AjerdrezZZZ123.o9, usuario1, usuario3])
 publicacion9_3 = (usuario9, "gracias por el apoyo gente, estoy aliviado", [usuario9, usuario3, usuario4, usuario6])
 
 
