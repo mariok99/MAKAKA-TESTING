@@ -1,10 +1,10 @@
 -- Completar con los datos del grupo
 --
 -- Nombre de Grupo: operacionHaskell
--- Integrante 1: Nombre Apellido, email, LU
--- Integrante 2: Nombre Apellido, email, LU
+-- Integrante 1: Andrea Ramon Barboza Franco, franco.barboza@hotmail.com, 176/20
+-- Integrante 2: Nahuel Prieto, nahuel.rlz@gmail.com, LU
 -- Integrante 3: Joaquín Lozano, joaquin.lozano.trabajo@gmail.com, 649/23
--- Integrante 4: Nombre Apellido, email, LU
+-- Integrante 4: Mario Alejandro Livia Auqui, marioalelivia@gmail.com, 642/23
 
 type Usuario = (Integer, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
@@ -134,6 +134,18 @@ estaRobertoCarlos ((us:users),rels,pubs) | (cantidadDeAmigos red us) > (10) = Tr
 {- Debería estar implementado con 10^6 en vez de 10, pero lo cambiamos para poder testear
  - un caso donde dé True sin crear una red con un millón + 1 tuplas de relaci. -}
 
+-- 6 -- 
+
+{- Describir qué hace la función. -}
+
+publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
+publicacionesDe red us = aux_publicacionesDe (publicaciones red) us  
+
+aux_publicacionesDe :: [Publicacion] -> Usuario -> [Publicacion]
+aux_publicacionesDe [] _ = []
+aux_publicacionesDe (pub:pubs) us | us == usuarioDePublicacion pub = pub : aux_publicacionesDe pubs us 
+                                  | otherwise = aux_publicacionesDe pubs us
+
 -- 7 --
 
 {- Describir qué hace la función -}
@@ -160,7 +172,32 @@ incluido :: (Eq t) => [t] -> [t] -> Bool
 incluido [] _ = True
 incluido (x:xs) ys | pertenece x ys = mismosElementos xs ys
                    | otherwise = False
-                   
+
+-- 9 -- 
+
+{- Describir qué hace la función -}
+
+tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
+tieneUnSeguidorFiel red us | pubs == [] = False
+                           | otherwise = aparicionesDeLikeador (eliminarRepetidos (likesDePublicacion (head pubs))) (concatenarLikesDePublicaciones pubs) (longitud pubs)
+                           where pubs = publicacionesDe red us
+
+aparicionesDeLikeador :: [Usuario] -> [Usuario] -> Int -> Bool  -- (usl1:ussl1) es la lista con los likes de la primera publicacion de us --
+aparicionesDeLikeador [] _ _ = False -- si nadie dio like en la primera publicacion, entonces False -- 
+aparicionesDeLikeador _ [] _ = False -- si concateno todos los likes y es vacío, es que nadie dio like = False
+aparicionesDeLikeador (usl1:ussl1) likesTotales pubsTotales | (cantidadDeApariciones usl1 likesTotales) == pubsTotales = True -- likesTotales es la lista concatenarLikesDePublicaciones -- 
+                                                            | otherwise = aparicionesDeLikeador ussl1 likesTotales pubsTotales 
+
+cantidadDeApariciones :: Usuario -> [Usuario] -> Int -- usX es un usuario genérico -- 
+cantidadDeApariciones _ [] = 0
+cantidadDeApariciones usX (us:users) | usX == us = 1 + (cantidadDeApariciones usX users) 
+                                     | otherwise = cantidadDeApariciones usX users 
+
+concatenarLikesDePublicaciones :: [Publicacion] -> [Usuario] -- agarro los likes de la primera publicación y los concateno, luego hago recursión sobre la lista sin la primera publicación, y así... --
+concatenarLikesDePublicaciones [] = []
+concatenarLikesDePublicaciones (pub:pubs) = eliminarRepetidos (quitarTodos (usuarioDePublicacion pub) (likesDePublicacion pub)) -- quito al autor de la publicacion porque no es valido como seguidorFiel -- 
+                                            ++ concatenarLikesDePublicaciones pubs -- agregué eliminar repetidos por si alguien dio like DOS VECES -- 
+
 -- 10 --
 
  {- existeSecuenciaDeAmigos determina si un usuario está relacionado con "us2".
