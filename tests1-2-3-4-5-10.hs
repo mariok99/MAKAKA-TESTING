@@ -34,6 +34,9 @@ redJ4=(usuariosJ2,relacionesJ4,[])
 redRobertoTrue=(usuariosJ1,relacionesRobertoTrue,[])
 redNomRep=(usuariosNomRep,[],[])
 
+tests = test [testSuiteEj1,testSuiteEj2,testSuiteEj3,testSuiteEj4,testSuiteEj5,testSuiteEj10]
+
+run1 = runTestTT tests
 
 testSuiteEj1 = test [
   " Caso 1: lista usuario vacía" ~: (nombresDeUsuarios redUsVacio) ~?= []
