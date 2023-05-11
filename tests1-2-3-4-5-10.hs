@@ -20,21 +20,60 @@ usNomRep=(777,"Marcelo")
 
 usuariosJ1=[usJ1,usJ3,usJ7]
 usuariosJ2=[usJ1,usJ2,usJ4,usJ5,usJ7,usJ11]
+--usuarios que dieron likes a alguna publicacion de su red
+usersU = [usJ1, usJ2, usJ3, usJ4]
+--usuarios que no pueden likear nada porque no hay publicaciones en su red
+usersV = [usJ5, usJ6, usJ7]
+--usuarios que no dieron ningun like a ninguna publicacion de su red
+usersX = [usJ8, usJ9, usJ10]
 
 relacionesJ1=[(usJ1,usJ3)]
+-- Relaciones con un solo usuario con max de amigos
 relacionesJ2=[(usJ1,usJ4),(usJ2,usJ4),(usJ5,usJ2),(usJ4,usJ7),(usJ5,usJ11)]
+
+-- Relaciones con varios usuarios teniendo máx de amigos
 relacionesJ3=[(usJ1,usJ4),(usJ2,usJ4),(usJ5,usJ2),(usJ5,usJ11)]
+
+-- Relaciones donde dos usuarios no tienen amigos y el resto sí
 relacionesJ4=[(usJ2,usJ5),(usJ1,usJ7)]
 
-redJ1=(usuariosJ1,relacionesJ1,[])
+-- publicaciones con likes
+publicacionU1_1 = (usJ1, "i need moneey", [usJ3, usJ2])
+publicacionU1_2 = (usJ1, "espero que ande", [usJ3, usJ2, usJ1,usJ4])
+publicacionU2_1 = (usJ2, "boca y nada mas", [usJ1])
+
+--publicaciones sin ningun like
+publicacionX8_1 = (usJ8, "lorem input", [])
+publicacionX9_1 = (usJ9, "zzzzz", [])
+publicacionX10_1 = (usJ10, "aloja", [])
+
+publicacionesU :: [Publicacion]
+publicacionesU = [publicacionU1_1, publicacionU1_2, publicacionU2_1]
+
+publicacionesX :: [Publicacion]
+publicacionesX = [publicacionX8_1, publicacionX9_1, publicacionX10_1]
+
+
+
+redJ1=(usuariosJ1,relacionesJ1,[]) -- redes usadas para los ejs 1,2,3,4,5 y 10. Ninguno precisa de publicaciones.
 redJ2=(usuariosJ2,relacionesJ2,[])
 redJ3=(usuariosJ2,relacionesJ3,[])
 redJ4=(usuariosJ2,relacionesJ4,[])
+--red con publicaciones y con likes de usuarios
+redU = (usersU, [], publicacionesU) -- redes usadas para los ejs 7 y 8. Ninguno precisa de relaciones.
 
-ususariosRobertoTrue=[usJ1,usJ2,usJ3,usJ4,usJ5,usJ6,usJ7,usJ8,usJ9,usJ10,usJ11,usJ12]
-usuariosNomRep=[usJ1,usJ2,usNomRep]
+--red sin publicaciones
+redV = (usersV, [], [])
 
-relacionesRobertoTrue=[(usJ1,usJ2),(usJ1,usJ3),(usJ1,usJ4),(usJ1,usJ5),(usJ1,usJ6),(usJ1,usJ7),(usJ1,usJ8),(usJ1,usJ9),(usJ1,usJ10),(usJ1,usJ11),(usJ1,usJ12)]
+--red con publicaciones pero sin likes
+redX = (usersX, [], publicacionesX)
+
+
+ususariosRobertoTrue=[usJ1,usJ2,usJ3,usJ4,usJ5,usJ6,usJ7,usJ8,usJ9,usJ10,usJ11,usJ12] -- lista usuarios donde estaRobertoCarlos pueda dar True.
+usuariosNomRep=[usJ1,usJ2,usNomRep] -- lista usuarios donde dos repiten el mismo nombre.
+
+relacionesRobertoTrue=[(usJ1,usJ2),(usJ1,usJ3),(usJ1,usJ4),(usJ1,usJ5),
+ (usJ1,usJ6),(usJ1,usJ7),(usJ1,usJ8),(usJ1,usJ9),(usJ1,usJ10),(usJ1,usJ11),(usJ1,usJ12)]
 
 redUsVacio=([],[],[])
 redRelsVacio=(usuariosJ1,[],[])
@@ -75,6 +114,18 @@ testSuiteEj4 = test [
 testSuiteEj5 = test [
   " Caso 1: No hay usuario con más de 10 amigos" ~: (estaRobertoCarlos redJ1) ~?= False,
   " Caso 2: Hay usuario con más de 10 amigos" ~: (estaRobertoCarlos redRobertoTrue) ~?= True
+ ]
+ 
+ testSuiteEj7 = test [
+    "Caso1 red con pubs y like de usuario" ~: (publicacionesQueLeGustanA redU usJ1) ~?= [publicacionU1_2, publicacionU2_1],
+    "Caso2 red sin publicaciones" ~: (publicacionesQueLeGustanA redV usJ5) ~?= [],
+    "Caso3 red con publicaciones pero sin likes" ~: (publicacionesQueLeGustanA redX usJ8) ~?= []
+ ]
+    
+testSuitEj8 = test [
+    "Caso1 usuarios con mismos likes en pubs" ~: (lesGustanLasMismasPublicaciones redU usJ3 usJ2) ~?= True,
+    "Caso2 usuarios con likes en distintas pubs" ~: (lesGustanLasMismasPublicaciones redU usJ1 usJ2) ~?= False,
+    "Caso3 usuarios con ningun like en pubs" ~: (lesGustanLasMismasPublicaciones redX usJ8 usJ9) ~?= True
  ]
 
 testSuiteEj10 = test [
