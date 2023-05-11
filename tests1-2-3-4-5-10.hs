@@ -59,12 +59,9 @@ redJ1=(usuariosJ1,relacionesJ1,[]) -- redes usadas para los ejs 1,2,3,4,5 y 10. 
 redJ2=(usuariosJ2,relacionesJ2,[])
 redJ3=(usuariosJ2,relacionesJ3,[])
 redJ4=(usuariosJ2,relacionesJ4,[])
+
 --red con publicaciones y con likes de usuarios
 redU = (usersU, [], publicacionesU) -- redes usadas para los ejs 7 y 8. Ninguno precisa de relaciones.
-
---red sin publicaciones
-redV = (usersV, [], [])
-
 --red con publicaciones pero sin likes
 redX = (usersX, [], publicacionesX)
 
@@ -77,6 +74,7 @@ relacionesRobertoTrue=[(usJ1,usJ2),(usJ1,usJ3),(usJ1,usJ4),(usJ1,usJ5),
 
 redUsVacio=([],[],[])
 redRelsVacio=(usuariosJ1,[],[])
+redPubsVacio = (usersV, [], [])
 
 redRobertoTrue=(usuariosJ1,relacionesRobertoTrue,[])
 redNomRep=(usuariosNomRep,[],[])
@@ -117,15 +115,16 @@ testSuiteEj5 = test [
  ]
  
  testSuiteEj7 = test [
-    "Caso1 red con pubs y like de usuario" ~: (publicacionesQueLeGustanA redU usJ1) ~?= [publicacionU1_2, publicacionU2_1],
-    "Caso2 red sin publicaciones" ~: (publicacionesQueLeGustanA redV usJ5) ~?= [],
-    "Caso3 red con publicaciones pero sin likes" ~: (publicacionesQueLeGustanA redX usJ8) ~?= []
+    "Caso 1: no hay publicaciones en la red" ~: (publicacionesQueLeGustanA redPubsVacio usJ5) ~?= [],
+    "Caso 2: el usuario dio like" ~: (publicacionesQueLeGustanA redU usJ1) ~?= [publicacionU1_2, publicacionU2_1],
+    "Caso 3: el usuario no dio like" ~: (publicacionesQueLeGustanA redX usJ8) ~?= []
  ]
     
 testSuiteEj8 = test [
-    "Caso1 usuarios con mismos likes en pubs" ~: (lesGustanLasMismasPublicaciones redU usJ3 usJ2) ~?= True,
-    "Caso2 usuarios con likes en distintas pubs" ~: (lesGustanLasMismasPublicaciones redU usJ1 usJ2) ~?= False,
-    "Caso3 usuarios con ningun like en pubs" ~: (lesGustanLasMismasPublicaciones redX usJ8 usJ9) ~?= True
+    "Caso 1: no hay publicaciones en la red" ~: (lesGustanLasMismasPublicaciones redPubsVacio usJ5 usJ6) ~?= True,
+    "Caso 2: les gustan las mismas publicaciones" ~: (lesGustanLasMismasPublicaciones redU usJ3 usJ2) ~?= True,
+    "Caso 3: les gustan distintas publicaciones" ~: (lesGustanLasMismasPublicaciones redU usJ1 usJ2) ~?= False,
+    "Caso 4: a ninguno les gusta alguna publicación" ~: (lesGustanLasMismasPublicaciones redX usJ8 usJ9) ~?= True
  ]
 
 testSuiteEj10 = test [
