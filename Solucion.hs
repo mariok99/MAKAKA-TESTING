@@ -1,8 +1,8 @@
 module Solucion where
-{-HLINT ignore-}  
+
 -- Completar con los datos del grupo
 
---
+
 -- Nombre de Grupo: operacionHaskell
 -- Integrante 1: Andrea Ramon Barboza Franco, franco.barboza@hotmail.com, 176/20
 -- Integrante 2: Nahuel Prieto, nahuel.rlz@gmail.com, 646/20
@@ -69,7 +69,8 @@ quitarTodos t (x:xs) | not (pertenece t (x:xs)) = (x:xs)
 
 -- 2 --
 
-{- Describir qué hace la función -}
+{- Al ingresar una red social válida y un usuario válido, nos devuelve
+ - la lista de usuarios que están relacionados. -}
 
 amigosDe :: RedSocial -> Usuario -> [Usuario]
 amigosDe red us = aux_amigosDe (relaciones red) us
@@ -88,7 +89,8 @@ segundo (x, y) = y
 
 -- 3 -- 
 
-{- Describir qué hace la función -}
+{- Al ingresar una red social válida y un usuario válido, nos devuelve
+ - la longitud de amigosDe del usuario ingresado. -}
 
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
 cantidadDeAmigos red us  =  longitud (amigosDe red us)
@@ -99,7 +101,7 @@ longitud (x:xs) = 1 + longitud xs
 
 -- 4 --
 
-{- Describir qué hace la función -}
+{- Al ingresar una red social nos devuelve el primer usuario con el máximo de cantidadDeAmigos. -}
 
 usuarioConMasAmigos :: RedSocial -> Usuario
 usuarioConMasAmigos red = buscarUsuarioMax red users m 
