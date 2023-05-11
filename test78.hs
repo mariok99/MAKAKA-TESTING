@@ -1,36 +1,21 @@
-module Ejercicio7y8 where
-type Usuario = (Integer, String) -- (id, nombre)
-type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
-type Publicacion = (Usuario, String, [Usuario]) -- (usuario que publica, texto publicacion, likes)
-type RedSocial = ([Usuario], [Relacion], [Publicacion])
-
--- Funciones basicas
-
-usuarios :: RedSocial -> [Usuario]
-usuarios (us, _, _) = us
-
-relaciones :: RedSocial -> [Relacion]
-relaciones (_, rs, _) = rs
-
-publicaciones :: RedSocial -> [Publicacion]
-publicaciones (_, _, ps) = ps
-
-idDeUsuario :: Usuario -> Integer
-idDeUsuario (id, _) = id 
-
-nombreDeUsuario :: Usuario -> String
-nombreDeUsuario (_, nombre) = nombre
-
-usuarioDePublicacion :: Publicacion -> Usuario
-usuarioDePublicacion (u, _, _) = u
-
-likesDePublicacion :: Publicacion -> [Usuario]
-likesDePublicacion (_, _, us) = us
+module Test78 where
+import Test.HUnit
+import Solucion
 
 
+tests = test [testSuiteEj7, testSuitEj8]
+run = runTestTT tests
+testSuiteEj7 = test    [
+    "Caso1 red con pubs y like de usuario" ~: (publicacionesQueLeGustanA redU userU1) ~?= [publicacionU1_2, publicacionU1_3],
+    "Caso2 red sin publicaciones" ~: (publicacionesQueLeGustanA redV userV1) ~?= [],
+    "Caso3 red con publicaciones pero sin likes" ~: (publicacionesQueLeGustanA redX userX1) ~?= []
+    ]
+testSuitEj8 = test  [
+    "Caso1 usuarios con mismos likes en pubs" ~: (lesGustanLasMismasPublicaciones redU userU3 userU2) ~?= True,
+    "Caso2 usuarios con likes en distintas pubs" ~: (lesGustanLasMismasPublicaciones redU userU1 userU2) ~?= False,
+    "Caso3 usuarios con ningun like en pubs" ~: (lesGustanLasMismasPublicaciones redX userX1 userX2) ~?= True
+    ]
 
-
--- test propios-------------------------------------------
 
 userU1 = (1, "Sol")
 userU2 = (2, "Guido")
@@ -50,9 +35,9 @@ publicacionU1_2 = (userU2, "boca y nada mas", [userU1])
 publicacionU1_3 = (userU1, "espero que ande", [userU3, userU2, userU1,userU4])
 
 --publicaciones sin ningun like
-publicacionX1_1 = (userV1, "lorem input", [])
-publicacionX1_2 = (userV2, "zzzzz", [])
-publicacionX1_3 = (userV3, "aloja", [])
+publicacionX1_1 = (userX1, "lorem input", [])
+publicacionX1_2 = (userX2, "zzzzz", [])
+publicacionX1_3 = (userX3, "aloja", [])
 
 --usuarios que dieron likes a alguna publicacion de su red
 usersU = [userU1, userU2, userU3, userU4]
@@ -80,7 +65,3 @@ redV = (usersV, relacionesV, publicacionesV)
 
 --red con publicaciones pero sin likes
 redX = (usersX, relacionesX, publicacionesX)
-
-
-
-
