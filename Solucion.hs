@@ -221,6 +221,7 @@ existeSecuenciaDeAmigos red us1 us2 = (pertenece us1 amigosU2) || (estanRelacion
 
 estanRelacionados :: RedSocial -> [Usuario] -> [Usuario] -> Bool
 estanRelacionados _ [] _ = False
+estanRelacionados _ _ [] = False
 estanRelacionados red (us:users) amigosU2 = (pertenece us amigosU2) || (estanRelacionados redSiguiente users amigosU2) || (estanRelacionados redSiguiente amigosUs amigosU2)
   where
     redSiguiente = eliminarUsuario red us
