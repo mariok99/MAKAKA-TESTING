@@ -151,7 +151,7 @@ aux_publicacionesDe (pub:pubs) us | us == usuarioDePublicacion pub = pub : aux_p
 
 -- 7 --
 
-{- Describir qué hace la función -}
+{- Devuelve una lista con las publicaciones de la red que le gustan al usuario -}
 
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
 publicacionesQueLeGustanA red us = pubsLikeadas (publicaciones red) us
@@ -163,7 +163,7 @@ pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = pub : (pub
                           
 -- 8 --
 
-{- Describir qué hace la función -}
+{- Devuelve True si a user1 y user2 les gustan las mismas publicaciones de la red -}
 
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones red us1 us2 = mismosElementos (publicacionesQueLeGustanA red us1) (publicacionesQueLeGustanA red us2)
