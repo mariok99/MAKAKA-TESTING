@@ -1,4 +1,5 @@
 module Solucion where
+{-HLINT ignore-}  
 -- Completar con los datos del grupo
 
 --
