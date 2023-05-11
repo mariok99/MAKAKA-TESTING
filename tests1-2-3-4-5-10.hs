@@ -83,7 +83,7 @@ redNomRep=(usuariosNomRep,[],[])
 
 -- Test Suites --
 
-tests = test [testSuiteEj1,testSuiteEj2,testSuiteEj3,testSuiteEj4,testSuiteEj5,testSuiteEj10]
+tests = test [testSuiteEj1,testSuiteEj2,testSuiteEj3,testSuiteEj4,testSuiteEj5,testSuiteEj7,testSuiteEj8,testSuiteEj10]
 
 run1 = runTestTT tests
 
@@ -122,7 +122,7 @@ testSuiteEj5 = test [
     "Caso3 red con publicaciones pero sin likes" ~: (publicacionesQueLeGustanA redX usJ8) ~?= []
  ]
     
-testSuitEj8 = test [
+testSuiteEj8 = test [
     "Caso1 usuarios con mismos likes en pubs" ~: (lesGustanLasMismasPublicaciones redU usJ3 usJ2) ~?= True,
     "Caso2 usuarios con likes en distintas pubs" ~: (lesGustanLasMismasPublicaciones redU usJ1 usJ2) ~?= False,
     "Caso3 usuarios con ningun like en pubs" ~: (lesGustanLasMismasPublicaciones redX usJ8 usJ9) ~?= True
