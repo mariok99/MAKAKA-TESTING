@@ -78,12 +78,11 @@ testSuiteEj5 = test [
  ]
 
 testSuiteEj10 = test [
-  " Caso 1: usuarios de entrada iguales, sin amigos" ~: (existeSecuenciaDeAmigos redJ1 usJ7 usJ7) ~?= False,
-  " Caso 2: usuarios de entrada iguales, con amigos" ~: (existeSecuenciaDeAmigos redJ1 usJ1 usJ1) ~?= True,
-  " Caso 3: usuarios de entrada distintos, sin amigos" ~: (existeSecuenciaDeAmigos redJ4 usJ4 usJ11) ~?= False,
-  " Caso 4: primer usuario no tiene amigos" ~: (existeSecuenciaDeAmigos redJ4 usJ4 usJ1) ~?= False,
-  " Caso 5: segundo usuario no tiene amigos" ~: (existeSecuenciaDeAmigos redJ4 usJ1 usJ11) ~?= False,
-  " Caso 6: ambos usuarios tienen amigos, pero no están relacionados" ~: (existeSecuenciaDeAmigos redJ4 usJ1 usJ2) ~?= False,
-  " Caso 7: ambos usuarios son amigos entre sí" ~: (existeSecuenciaDeAmigos redJ4 usJ2 usJ5) ~?= True,
-  " Caso 8: ambos usuarios están relacionados lejanamente" ~: (existeSecuenciaDeAmigos redJ3 usJ1 usJ11) ~?= True
+  " Caso especial 1: usuarios de entrada iguales, sin amigos" ~: (existeSecuenciaDeAmigos redJ1 usJ7 usJ7) ~?= False,
+  " Caso especial 2: usuarios de entrada iguales, con amigos" ~: (existeSecuenciaDeAmigos redJ1 usJ1 usJ1) ~?= True,
+  " Caso base 1: ambos usuarios son amigos entre sí" ~: (existeSecuenciaDeAmigos redJ4 usJ2 usJ5) ~?= True,
+  " Caso base 2: primer usuario no tiene amigos" ~: (existeSecuenciaDeAmigos redJ4 usJ4 usJ1) ~?= False,
+  " Caso base 3: segundo usuario no tiene amigos" ~: (existeSecuenciaDeAmigos redJ4 usJ1 usJ11) ~?= False,
+  " Caso recursivo 1: ambos usuarios tienen amigos, pero no están relacionados" ~: (existeSecuenciaDeAmigos redJ4 usJ1 usJ2) ~?= False,
+  " Caso recursivo 2: ambos usuarios están relacionados lejanamente" ~: (existeSecuenciaDeAmigos redJ3 usJ1 usJ11) ~?= True
  ]
