@@ -39,11 +39,11 @@ testSuiteEj5 = test [
  ]
 
 testSuiteEj6 = test [
-    "Caso1 red sin publicaciones con usuarios" ~: (publicacionesDe redM1 usJ1) ~?= [],
-    "Caso2 red con pubs y user sin pubs" ~: (publicacionesDe redM3 usJ7) ~?= [],
-    "Caso3 usJ4 tiene pubs, no es autor de todas" ~: (publicacionesDe redM4 usJ4) ~?= [publicacionM4_1, publicacionM4_2],
-    "Caso4 usJ9 tiene pubs y son todas de la red" ~: (publicacionesDe redM5 usJ9) ~?= publicacionesM5, 
-    "Caso5 red tiene pubs pero ninguno de us" ~: (publicacionesDe redM6 usJ9) ~?= []
+    "Caso 1: red sin publicaciones con usuarios" ~: (publicacionesDe redM1 usJ1) ~?= [],
+    "Caso 2: red con pubs y user sin pubs" ~: (publicacionesDe redM3 usJ7) ~?= [],
+    "Caso 3: usJ4 tiene pubs, no es autor de todas" ~: (publicacionesDe redM4 usJ4) ~?= [publicacionM4_1, publicacionM4_2],
+    "Caso 4: usJ9 tiene pubs y son todas de la red" ~: (publicacionesDe redM5 usJ9) ~?= publicacionesM5, 
+    "Caso 5: red tiene pubs pero ninguno de us" ~: (publicacionesDe redM6 usJ9) ~?= []
   ]
 
 testSuiteEj7 = test [
@@ -60,15 +60,15 @@ testSuiteEj8 = test [
  ]
 
 testSuiteEj9 = test [
-  "Caso1 red sin publicaciones" ~: (tieneUnSeguidorFiel redM1 usJ1) ~?= False,
-  "Caso2 cantidad de pubs de us = 0" ~: (tieneUnSeguidorFiel redM6 usJ8) ~?= False,
-  "Caso3 usJ1 tiene pubs, pero likes = 0" ~: (tieneUnSeguidorFiel redM2 usJ1) ~?= False,
-  "Caso4 usJ1 tiene pubs y likes, ningún us dió likes a todas" ~: (tieneUnSeguidorFiel redM7 usJ1) ~?= False,
-  "Caso5 usJ1 tiene likes repetidos, ningún us dió likes a todas" ~: (tieneUnSeguidorFiel redM8 usJ1) ~=? False,
-  "Caso6 usJ1 sin likes repetidos, tiene seguidor fiel" ~: (tieneUnSeguidorFiel redM9 usJ1) ~?= True,
-  "Caso7 usJ5 tiene likes repetidos, tiene seguidor fiel" ~: (tieneUnSeguidorFiel redM10 usJ5) ~?= True,
-  "Caso8 usJ6 autolikes a todas sus pubs y no tiene seguidor fiel" ~: (tieneUnSeguidorFiel redM11 usJ6) ~?= False,
-  "Caso9 usJ11 tiene seguidor fiel y se dio autolike a todas sus pubs" ~: (tieneUnSeguidorFiel redM12 usJ11) ~?= True
+  "Caso 1: red sin publicaciones" ~: (tieneUnSeguidorFiel redM1 usJ1) ~?= False,
+  "Caso 2: cantidad de pubs de us = 0" ~: (tieneUnSeguidorFiel redM6 usJ8) ~?= False,
+  "Caso 3: usJ1 tiene pubs, pero likes = 0" ~: (tieneUnSeguidorFiel redM2 usJ1) ~?= False,
+  "Caso 4: usJ1 tiene pubs y likes, ningún us dió likes a todas" ~: (tieneUnSeguidorFiel redM7 usJ1) ~?= False,
+  "Caso 5: usJ1 tiene likes repetidos, ningún us dió likes a todas" ~: (tieneUnSeguidorFiel redM8 usJ1) ~=? False,
+  "Caso 6: usJ1 sin likes repetidos, tiene seguidor fiel" ~: (tieneUnSeguidorFiel redM9 usJ1) ~?= True,
+  "Caso 7: usJ5 tiene likes repetidos, tiene seguidor fiel" ~: (tieneUnSeguidorFiel redM10 usJ5) ~?= True,
+  "Caso 8: usJ6 autolikes a todas sus pubs y no tiene seguidor fiel" ~: (tieneUnSeguidorFiel redM11 usJ6) ~?= False,
+  "Caso 9: usJ11 tiene seguidor fiel y se dio autolike a todas sus pubs" ~: (tieneUnSeguidorFiel redM12 usJ11) ~?= True
   ]
 
 testSuiteEj10 = test [
