@@ -1,4 +1,5 @@
 module Solucion where
+{-HLINT ignore-}  
 -- Completar con los datos del grupo
 
 --
@@ -150,7 +151,7 @@ aux_publicacionesDe (pub:pubs) us | us == usuarioDePublicacion pub = pub : aux_p
 
 -- 7 --
 
-{- Describir qué hace la función -}
+{- Devuelve una lista con las publicaciones de la red que le gustan al usuario -}
 
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
 publicacionesQueLeGustanA red us = pubsLikeadas (publicaciones red) us
@@ -162,18 +163,18 @@ pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = pub : (pub
                           
 -- 8 --
 
-{- Describir qué hace la función -}
+{- Devuelve True si a user1 y user2 les gustan las mismas publicaciones de la red -}
 
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones red us1 us2 = mismosElementos (publicacionesQueLeGustanA red us1) (publicacionesQueLeGustanA red us2)
 
---mismosElementos :: (Eq t) => [t] -> [t] -> Bool
---mismosElementos xs ys = (incluido xs ys) && (incluido ys xs)
-
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
-mismosElementos [] _ = True
-mismosElementos (x:xs) ys | pertenece x ys = mismosElementos xs ys
-                          | otherwise = False
+mismosElementos xs ys = (incluido xs ys) && (incluido ys xs) -- dos conjuntos A,B tienen los mismos elementos si B incluye a A y A incluye a B. --
+
+incluido :: (Eq t) => [t] -> [t] -> Bool
+incluido [] _ = True
+incluido (x:xs) ys | pertenece x ys = incluido xs ys 
+                   | otherwise = False
 
 -- 9 -- 
 
@@ -212,14 +213,15 @@ concatenarLikesDePublicaciones (pub:pubs) = eliminarRepetidos (quitarTodos (usua
   - del problema, devolviendo False. -}
 
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
-existeSecuenciaDeAmigos red us1 us2 = (pertenece us1 amigosU2) || (estanRelacionados red amigosU1 amigosU2)
+existeSecuenciaDeAmigos red us1 us2 = (pertenece us1 amigosU2) || (estanRelacionados redSiguiente amigosU1 amigosU2)
   where 
     amigosU1 = amigosDe red us1
     amigosU2 = amigosDe red us2
--- No se elimina us1 por si los parámetros de entrada son iguales. --
+    redSiguiente = eliminarUsuario red us1
 
 estanRelacionados :: RedSocial -> [Usuario] -> [Usuario] -> Bool
 estanRelacionados _ [] _ = False
+estanRelacionados _ _ [] = False
 estanRelacionados red (us:users) amigosU2 = (pertenece us amigosU2) || (estanRelacionados redSiguiente users amigosU2) || (estanRelacionados redSiguiente amigosUs amigosU2)
   where
     redSiguiente = eliminarUsuario red us
