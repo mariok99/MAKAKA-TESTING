@@ -38,7 +38,7 @@ testSuiteEj5 = test [
   " Caso 2: Hay usuario con más de 10 amigos" ~: (estaRobertoCarlos redRobertoTrue) ~?= True
  ]
  
- testSuiteEj7 = test [
+testSuiteEj7 = test [
     "Caso 1: no hay publicaciones en la red" ~: (publicacionesQueLeGustanA redPubsVacio usJ5) ~?= [],
     "Caso 2: el usuario dio like" ~: (publicacionesQueLeGustanA redU usJ1) ~?= [publicacionU1_2, publicacionU2_1],
     "Caso 3: el usuario no dio like" ~: (publicacionesQueLeGustanA redX usJ8) ~?= []
