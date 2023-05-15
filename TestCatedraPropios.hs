@@ -62,7 +62,7 @@ testSuiteEj9 = test [
   "Caso 2: cantidad de pubs de us = 0" ~: (tieneUnSeguidorFiel redM6 usJ8) ~?= False,
   "Caso 3: usuario tiene pubs pero ninguna tuvo likes" ~: (tieneUnSeguidorFiel redM2 usJ1) ~?= False,
   "Caso 4: usuario tiene pubs pero nadie le dio likes a todas" ~: (tieneUnSeguidorFiel redM7 usJ1) ~?= False,
-  "Caso 5: usuario tiene pubs con likes repetidos, nadie dió likes a todas" ~: (tieneUnSeguidorFiel redM8 usJ1) ~=? False,
+  "Caso 5: usuario tiene pubs con likes repetidos, nadie dio likes a todas" ~: (tieneUnSeguidorFiel redM8 usJ1) ~=? False,
   "Caso 6: usuario no tiene likes repetidos, tiene seguidor fiel" ~: (tieneUnSeguidorFiel redM9 usJ1) ~?= True,
   "Caso 7: usuario tiene likes repetidos, tiene seguidor fiel" ~: (tieneUnSeguidorFiel redM10 usJ5) ~?= True,
   "Caso 8: usuario se dio autolikes a todas sus pubs y no tiene seguidor fiel" ~: (tieneUnSeguidorFiel redM11 usJ6) ~?= False,
