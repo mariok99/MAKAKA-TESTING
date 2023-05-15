@@ -181,9 +181,9 @@ incluido (x:xs) ys | pertenece x ys = incluido xs ys
 
 -- 9 -- 
 
-{-tieneUnseguidorFiel llama a apariciones de likeador con las publicaciones del usuario ingresado; aparicionesDeLikeador compara
+{-tieneUnseguidorFiel llama a aparicionesDelikeador con las publicaciones del usuario ingresado; aparicionesDeLikeador compara
 las apariciones de los usuarios de la primera publicacion en la lista de likesTotales (aclaraciones en las lineas de codigo), si alguno de estos usuarios 
-apareció tantas veces como publicaciones tenga el usuario ingresado, entonces devuele True, ya que eso quiere decir estaba cada lista de likes de cada publicación.
+apareció tantas veces como publicaciones tenga el usuario ingresado, entonces devuele True, ya que eso quiere decir que estaba en la lista de likes de cada publicación.
 -}
 
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
@@ -211,14 +211,15 @@ concatenarLikesDePublicaciones (pub:pubs) = eliminarRepetidos (quitarTodos (usua
 
 -- 10 --
 
- {- existeSecuenciaDeAmigos determina si un usuario está relacionado con "us2".
-  - Dicho usuario puede ser "us1". Si no lo es, se busca entre los "amigos de us1".
-  - Se repite recursivamente con los "amigos de los amigos", en cada paso eliminando de la 
-  - red quienes no son amigos de us2. Si se llega a algún "N-ésimo usuario" que satisface:
-  - es amigo del "usuario anterior" y es amigo de "us2", entonces se puede concluir 
-  - que es posible armar la cadena [us1,amigoDeUs1,amigoDeAmigoDeUs1,...,amigoDelAnterior,us2],
-  - devolviendo True. De lo contrario, no existe una secuencia que sea solución 
-  - del problema, devolviendo False. -}
+ {- existeSecuenciaDeAmigos devuelve True cuando encuentra un usuario N que 
+  - es amigo de us2, es decir que existe la secuencia [us1,...,N,us2].
+  - Para conseguir N, se busca entre us1 y sus amigos. 
+  - Si ninguno cumple, se busca entre los amigos, y asì recursivamente...
+  - De esta forma, se garantiza que N es amigo del anterior, ya que para llegar 
+  - a él se tuvo que buscar en los amigos del usuario K, para todo K entre 1 y N. 
+  - A su vez, en cada "búsqueda" se va eliminando de la red a cada usuario (y sus relaciones) 
+  - que no es amigo de us2, de forma que si no existe un usuario N, se llega
+  - eventualmente a la lista [], donde se devuelve False. -}
 
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos red us1 us2 = (pertenece us1 amigosU2) || (estanRelacionados redSiguiente amigosU1 amigosU2)
@@ -230,10 +231,10 @@ existeSecuenciaDeAmigos red us1 us2 = (pertenece us1 amigosU2) || (estanRelacion
 estanRelacionados :: RedSocial -> [Usuario] -> [Usuario] -> Bool
 estanRelacionados _ [] _ = False
 estanRelacionados _ _ [] = False
-estanRelacionados red (us:users) amigosU2 = (pertenece us amigosU2) || (estanRelacionados redSiguiente users amigosU2) || (estanRelacionados redSiguiente amigosUs amigosU2)
+estanRelacionados red (us:users) amigosUltimos = (pertenece us amigosUltimos) || (estanRelacionados redSiguiente users amigosUltimos) || (estanRelacionados redSiguiente amigosUsActual amigosUltimos)
   where
     redSiguiente = eliminarUsuario red us
-    amigosUs = amigosDe red us
+    amigosUsActual = amigosDe red us
 
 eliminarUsuario :: RedSocial -> Usuario -> RedSocial
 eliminarUsuario (users,rels,_) us = ((quitarTodos us users),(eliminarRelaciones rels us),[])
