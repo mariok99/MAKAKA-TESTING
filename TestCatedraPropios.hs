@@ -3,11 +3,9 @@ import Test.HUnit
 
 -- Test Suites --
 
-main = run
+main = runTestTT tests
 
 tests = test [testSuiteEj1,testSuiteEj2,testSuiteEj3,testSuiteEj4,testSuiteEj5,testSuiteEj6,testSuiteEj7,testSuiteEj8,testSuiteEj9,testSuiteEj10]
-
-run = runTestTT tests
 
 testSuiteEj1 = test [
   " Caso 1: lista usuario vacía" ~: (nombresDeUsuarios redUsVacio) ~?= [],
