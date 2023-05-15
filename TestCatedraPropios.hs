@@ -45,7 +45,7 @@ testSuiteEj6 = test [
     "Caso4 usJ9 tiene pubs y son todas de la red" ~: (publicacionesDe redM5 usJ9) ~?= publicacionesM5, 
     "Caso5 red tiene pubs pero ninguno de us" ~: (publicacionesDe redM6 usJ9) ~?= []
   ]
- 
+
 testSuiteEj7 = test [
     "Caso 1: no hay publicaciones en la red" ~: (publicacionesQueLeGustanA redPubsVacio usJ5) ~?= [],
     "Caso 2: el usuario dio like" ~: (publicacionesQueLeGustanA redU usJ1) ~?= [publicacionU1_2, publicacionU2_1],
