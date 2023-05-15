@@ -141,7 +141,8 @@ estaRobertoCarlos ((us:users),rels,pubs) | (cantidadDeAmigos red us) > (10) = Tr
 
 -- 6 -- 
 
-{- Describir qué hace la función. -}
+{- publicacionesDe llama a la auxiliar, la auxiliar devuelve una lista que contiene únicamente las publicaciones que tienen como publicador 
+al usuario ingresado-}
 
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe red us = aux_publicacionesDe (publicaciones red) us  
@@ -180,7 +181,10 @@ incluido (x:xs) ys | pertenece x ys = incluido xs ys
 
 -- 9 -- 
 
-{- Describir qué hace la función -}
+{-tieneUnseguidorFiel llama a apariciones de likeador con las publicaciones del usuario ingresado; aparicionesDeLikeador compara
+las apariciones de los usuarios de la primera publicacion en la lista de likesTotales (aclaraciones en las lineas de codigo), si alguno de estos usuarios 
+apareció tantas veces como publicaciones tenga el usuario ingresado, entonces devuele True, ya que eso quiere decir estaba cada lista de likes de cada publicación.
+-}
 
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
 tieneUnSeguidorFiel red us | pubs == [] = False
@@ -188,8 +192,8 @@ tieneUnSeguidorFiel red us | pubs == [] = False
                            where pubs = publicacionesDe red us
 
 aparicionesDeLikeador :: [Usuario] -> [Usuario] -> Int -> Bool  -- (usl1:ussl1) es la lista con los likes de la primera publicacion de us --
-aparicionesDeLikeador [] _ _ = False -- si nadie dio like en la primera publicacion, entonces False -- 
-aparicionesDeLikeador _ [] _ = False -- si concateno todos los likes y es vacío, es que nadie dio like = False
+aparicionesDeLikeador [] _ _ = False
+aparicionesDeLikeador _ [] _ = False
 aparicionesDeLikeador (usl1:ussl1) likesTotales pubsTotales | (cantidadDeApariciones usl1 likesTotales) == pubsTotales = True -- likesTotales es la lista concatenarLikesDePublicaciones -- 
                                                             | otherwise = aparicionesDeLikeador ussl1 likesTotales pubsTotales 
 
@@ -198,7 +202,9 @@ cantidadDeApariciones _ [] = 0
 cantidadDeApariciones usX (us:users) | usX == us = 1 + (cantidadDeApariciones usX users) 
                                      | otherwise = cantidadDeApariciones usX users 
 
-concatenarLikesDePublicaciones :: [Publicacion] -> [Usuario] -- agarro los likes de la primera publicación y los concateno, luego hago recursión sobre la lista sin la primera publicación, y así... --
+{- recibe la lista de publicaciones del usuario ingresado y arma una lista que contiene sólo los likes de dichas publicaciones -- 
+-}
+concatenarLikesDePublicaciones :: [Publicacion] -> [Usuario] 
 concatenarLikesDePublicaciones [] = []
 concatenarLikesDePublicaciones (pub:pubs) = eliminarRepetidos (quitarTodos (usuarioDePublicacion pub) (likesDePublicacion pub)) -- quito al autor de la publicacion porque no es valido como seguidorFiel -- 
                                             ++ concatenarLikesDePublicaciones pubs -- agregué eliminar repetidos por si alguien dio like DOS VECES -- 
