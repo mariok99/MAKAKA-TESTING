@@ -1,8 +1,5 @@
 module Solucion where
 
--- Completar con los datos del grupo
-
-
 -- Nombre de Grupo: operacionHaskell
 -- Integrante 1: Andrea Ramon Barboza Franco, franco.barboza@hotmail.com, 176/20
 -- Integrante 2: Nahuel Prieto, nahuel.rlz@gmail.com, 646/20
@@ -56,7 +53,7 @@ eliminarRepetidos [] = []
 eliminarRepetidos (x:xs) | not (pertenece x xs) = x : eliminarRepetidos xs
                          | otherwise = x : eliminarRepetidos (quitarTodos x xs)
                          
-pertenece:: (Eq t) => t -> [t] -> Bool
+pertenece :: (Eq t) => t -> [t] -> Bool
 pertenece n [] = False
 pertenece n (x:xs)  | n == x = True
                     | otherwise = pertenece n xs
@@ -78,7 +75,7 @@ amigosDe red us = aux_amigosDe (relaciones red) us
 aux_amigosDe :: [Relacion] -> Usuario -> [Usuario]
 aux_amigosDe [] _ = []
 aux_amigosDe (rel:rels) us | (primero rel) == us = (segundo rel) : (aux_amigosDe rels us)
-                           | (segundo rel) == us = (primero rel) : (aux_amigosDe rels us)  -- si ninguno se cumple, es que no era relacion del us -- 
+                           | (segundo rel) == us = (primero rel) : (aux_amigosDe rels us)  -- Si ninguno se cumple, es que no era relacion del us. -- 
                            | otherwise =  aux_amigosDe rels us 
 
 primero :: (t,t) -> t
@@ -141,8 +138,8 @@ estaRobertoCarlos ((us:users),rels,pubs) | (cantidadDeAmigos red us) > (10) = Tr
 
 -- 6 -- 
 
-{- publicacionesDe llama a la auxiliar, la auxiliar devuelve una lista que contiene únicamente las publicaciones que tienen como publicador 
-al usuario ingresado-}
+{- publicacionesDe devuelve una lista que contiene únicamente las  
+ - publicaciones que tienen como publicador al usuario ingresado. -}
 
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe red us = aux_publicacionesDe (publicaciones red) us  
@@ -154,7 +151,8 @@ aux_publicacionesDe (pub:pubs) us | us == usuarioDePublicacion pub = pub : aux_p
 
 -- 7 --
 
-{- Devuelve una lista con las publicaciones de la red que le gustan al usuario -}
+{- Devuelve una lista con las publicaciones de la red en las  
+ - cuales el usuario ingresado pertenece a la lista de likes .-}
 
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
 publicacionesQueLeGustanA red us = pubsLikeadas (publicaciones red) us
@@ -181,20 +179,20 @@ incluido (x:xs) ys | pertenece x ys = incluido xs ys
 
 -- 9 -- 
 
-{-tieneUnseguidorFiel llama a aparicionesDelikeador con las publicaciones del usuario ingresado; aparicionesDeLikeador compara
-las apariciones de los usuarios de la primera publicacion en la lista de likesTotales (aclaraciones en las lineas de codigo), si alguno de estos usuarios 
-apareció tantas veces como publicaciones tenga el usuario ingresado, entonces devuele True, ya que eso quiere decir que estaba en la lista de likes de cada publicación.
--}
+{- tieneUnseguidorFiel llama a aparicionesDelikeador con las publicaciones del usuario ingresado; aparicionesDeLikeador compara
+ - las apariciones de los usuarios que dieron like en la primera publicacion en la lista de likesTotales, si alguno de estos usuarios 
+ - apareció tantas veces como publicaciones tenga el usuario ingresado, entonces devuele True, 
+ - ya que eso significa que estaba en la lista de likes de cada publicación. -}
 
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
 tieneUnSeguidorFiel red us | pubs == [] = False
                            | otherwise = aparicionesDeLikeador (eliminarRepetidos (likesDePublicacion (head pubs))) (concatenarLikesDePublicaciones pubs) (longitud pubs)
                            where pubs = publicacionesDe red us
 
-aparicionesDeLikeador :: [Usuario] -> [Usuario] -> Int -> Bool  -- (usl1:ussl1) es la lista con los likes de la primera publicacion de us --
+aparicionesDeLikeador :: [Usuario] -> [Usuario] -> Int -> Bool  -- (usl1:ussl1) es la lista con los likes de la primera publicacion de us. --
 aparicionesDeLikeador [] _ _ = False
 aparicionesDeLikeador _ [] _ = False
-aparicionesDeLikeador (usl1:ussl1) likesTotales pubsTotales | (cantidadDeApariciones usl1 likesTotales) == pubsTotales = True -- likesTotales es la lista concatenarLikesDePublicaciones -- 
+aparicionesDeLikeador (usl1:ussl1) likesTotales pubsTotales | (cantidadDeApariciones usl1 likesTotales) == pubsTotales = True -- likesTotales es la lista concatenarLikesDePublicaciones. -- 
                                                             | otherwise = aparicionesDeLikeador ussl1 likesTotales pubsTotales 
 
 cantidadDeApariciones :: Usuario -> [Usuario] -> Int -- usX es un usuario genérico -- 
@@ -202,23 +200,23 @@ cantidadDeApariciones _ [] = 0
 cantidadDeApariciones usX (us:users) | usX == us = 1 + (cantidadDeApariciones usX users) 
                                      | otherwise = cantidadDeApariciones usX users 
 
-{- recibe la lista de publicaciones del usuario ingresado y arma una lista que contiene sólo los likes de dichas publicaciones -- 
--}
+-- recibe la lista de publicaciones del usuario ingresado y arma una lista que contiene sólo los likes de dichas publicaciones. -- 
+
 concatenarLikesDePublicaciones :: [Publicacion] -> [Usuario] 
 concatenarLikesDePublicaciones [] = []
-concatenarLikesDePublicaciones (pub:pubs) = eliminarRepetidos (quitarTodos (usuarioDePublicacion pub) (likesDePublicacion pub)) -- quito al autor de la publicacion porque no es valido como seguidorFiel -- 
-                                            ++ concatenarLikesDePublicaciones pubs -- agregué eliminar repetidos por si alguien dio like DOS VECES -- 
+concatenarLikesDePublicaciones (pub:pubs) = eliminarRepetidos (quitarTodos (usuarioDePublicacion pub) (likesDePublicacion pub)) -- quito al autor de la publicacion porque no es valido como seguidorFiel. -- 
+                                            ++ concatenarLikesDePublicaciones pubs -- agregué eliminar repetidos por si alguien dio like DOS VECES. -- 
 
 -- 10 --
 
  {- existeSecuenciaDeAmigos devuelve True cuando encuentra un usuario N que 
-  - es amigo de us2, es decir que existe la secuencia [us1,...,N,us2].
-  - Para conseguir N, se busca entre us1 y sus amigos. 
+  - es amigo de us2, es decir que existe la secuencia [us1,...,usN,us2].
+  - Para conseguir usN, se busca entre us1 y sus amigos. 
   - Si ninguno cumple, se busca entre los amigos, y asì recursivamente...
-  - De esta forma, se garantiza que N es amigo del anterior, ya que para llegar 
-  - a él se tuvo que buscar en los amigos del usuario K, para todo K entre 1 y N. 
-  - A su vez, en cada "búsqueda" se va eliminando de la red a cada usuario (y sus relaciones) 
-  - que no es amigo de us2, de forma que si no existe un usuario N, se llega
+  - De esta forma, se garantiza que usN es amigo del anterior, ya que para llegar 
+  - a él se tuvo que buscar en los amigos del usuario K, para todo K entre 1 y N-1. 
+  - A su vez, en cada "búsqueda" se va eliminando de la red a todo usuario (con sus relaciones) 
+  - quien no sea amigo de us2, de forma que si no existe un usuario N, se llega
   - eventualmente a la lista [], donde se devuelve False. -}
 
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
@@ -229,8 +227,8 @@ existeSecuenciaDeAmigos red us1 us2 = (pertenece us1 amigosU2) || (estanRelacion
     redSiguiente = eliminarUsuario red us1
 
 estanRelacionados :: RedSocial -> [Usuario] -> [Usuario] -> Bool
-estanRelacionados _ [] _ = False
-estanRelacionados _ _ [] = False
+estanRelacionados _ [] _ = False -- us1 no tiene amigos o no existe un usuario N. --
+estanRelacionados _ _ [] = False -- us2 no tiene amigos. --
 estanRelacionados red (us:users) amigosUltimos = (pertenece us amigosUltimos) || (estanRelacionados redSiguiente users amigosUltimos) || (estanRelacionados redSiguiente amigosUsActual amigosUltimos)
   where
     redSiguiente = eliminarUsuario red us
