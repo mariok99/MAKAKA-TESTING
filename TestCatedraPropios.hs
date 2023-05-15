@@ -37,6 +37,14 @@ testSuiteEj5 = test [
   " Caso 1: No hay usuario con más de 10 amigos" ~: (estaRobertoCarlos redJ1) ~?= False,
   " Caso 2: Hay usuario con más de 10 amigos" ~: (estaRobertoCarlos redRobertoTrue) ~?= True
  ]
+
+testSuiteEj6 = test [
+    "Caso1 red sin publicaciones con usuarios" ~: (publicacionesDe redM1 usJ1) ~?= [],
+    "Caso2 red con pubs y user sin pubs" ~: (publicacionesDe redM3 usJ7) ~?= [],
+    "Caso3 usJ4 tiene pubs, no es autor de todas" ~: (publicacionesDe redM4 usJ4) ~?= [publicacionM4_1, publicacionM4_2],
+    "Caso4 usJ9 tiene pubs y son todas de la red" ~: (publicacionesDe redM5 usJ9) ~?= publicacionesM5, 
+    "Caso5 red tiene pubs pero ninguno de us" ~: (publicacionesDe redM6 usJ9) ~?= []
+  ]
  
 testSuiteEj7 = test [
     "Caso 1: no hay publicaciones en la red" ~: (publicacionesQueLeGustanA redPubsVacio usJ5) ~?= [],
