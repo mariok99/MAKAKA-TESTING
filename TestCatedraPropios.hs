@@ -56,7 +56,7 @@ testSuiteEj8 = test [
     "Caso 2: les gustan las mismas publicaciones" ~: (lesGustanLasMismasPublicaciones redU usJ3 usJ2) ~?= True,
     "Caso 3: idem que 2, a uno le gusta más veces una publicación" ~: (lesGustanLasMismasPublicaciones redV usJ1 usJ4) ~?= True,
     "Caso 4: les gustan distintas publicaciones" ~: (lesGustanLasMismasPublicaciones redU usJ1 usJ2) ~?= False,
-    "Caso 5: idem que 4, a uno le gusta más veces una publicación" ~: (lesGustanLasMismasPublicaciones redV usJ1 usJ4) ~?= False,
+    "Caso 5: idem que 4, a uno le gusta más veces una publicación" ~: (lesGustanLasMismasPublicaciones redV usJ1 usJ2) ~?= False,
     "Caso 6: a ninguno les gusta alguna publicación" ~: (lesGustanLasMismasPublicaciones redX usJ8 usJ9) ~?= True
  ]
 
