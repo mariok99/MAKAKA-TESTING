@@ -155,13 +155,14 @@ aux_publicacionesDe (pub:pubs) us | us == usuarioDePublicacion pub = pub : aux_p
  - cuales el usuario ingresado pertenece a la lista de likes .-}
 
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
-publicacionesQueLeGustanA red us = eliminarRepetidos(pubsLikeadas (publicaciones red) us) -- Dar multiples likes no está prohibido en las redes. --
+publicacionesQueLeGustanA red us = pubsLikeadas (publicaciones red) us
 
 pubsLikeadas:: [Publicacion] -> Usuario -> [Publicacion]
 pubsLikeadas [] _ = []
-pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = pub : (pubsLikeadas pubs us)
+pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = pub : (pubsLikeadas pubs us) 
                             | otherwise = pubsLikeadas pubs us
-                          
+-- Como pubsLikeadas sólo ve si us pertenece a una pub: si la red es válida, nunca se devuelve publicaciones repetidas. --
+
 -- 8 --
 
 {- Devuelve True si a user1 y user2 les gustan las mismas publicaciones de la red -}
