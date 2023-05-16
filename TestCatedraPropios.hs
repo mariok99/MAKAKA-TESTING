@@ -54,8 +54,10 @@ testSuiteEj7 = test [
 testSuiteEj8 = test [
     "Caso 1: no hay publicaciones en la red" ~: (lesGustanLasMismasPublicaciones redPubsVacio usJ5 usJ6) ~?= True,
     "Caso 2: les gustan las mismas publicaciones" ~: (lesGustanLasMismasPublicaciones redU usJ3 usJ2) ~?= True,
-    "Caso 3: les gustan distintas publicaciones" ~: (lesGustanLasMismasPublicaciones redU usJ1 usJ2) ~?= False,
-    "Caso 4: a ninguno les gusta alguna publicación" ~: (lesGustanLasMismasPublicaciones redX usJ8 usJ9) ~?= True
+    "Caso 3: idem que 2, a uno le gusta más veces una publicación" ~: (lesGustanLasMismasPublicaciones redV usJ1 usJ4) ~?= True,
+    "Caso 4: les gustan distintas publicaciones" ~: (lesGustanLasMismasPublicaciones redU usJ1 usJ2) ~?= False,
+    "Caso 5: idem que 4, a uno le gusta más veces una publicación" ~: (lesGustanLasMismasPublicaciones redV usJ1 usJ4) ~?= False,
+    "Caso 6: a ninguno les gusta alguna publicación" ~: (lesGustanLasMismasPublicaciones redX usJ8 usJ9) ~?= True
  ]
 
 testSuiteEj9 = test [
@@ -120,19 +122,18 @@ relacionesJ4=[(usJ2,usJ5),(usJ1,usJ7)]
 
 -- publicaciones con likes
 publicacionU1_1 = (usJ1, "i need moneey", [usJ3, usJ2])
-publicacionU1_2 = (usJ1, "espero que ande", [usJ3, usJ2, usJ1,usJ4])
+publicacionU1_2 = (usJ1, "espero que ande", [usJ3, usJ2, usJ1,usJ4,usJ4])
 publicacionU2_1 = (usJ2, "boca y nada mas", [usJ1])
+publicacionU2_2 = (usJ2, "aguante mario bros", [usJ4,usJ3,usJ1,usJ1])
 
 --publicaciones sin ningun like
 publicacionX8_1 = (usJ8, "lorem input", [])
 publicacionX9_1 = (usJ9, "zzzzz", [])
 publicacionX10_1 = (usJ10, "aloja", [])
 
-publicacionesU :: [Publicacion]
 publicacionesU = [publicacionU1_1, publicacionU1_2, publicacionU2_1]
-
-publicacionesX :: [Publicacion]
 publicacionesX = [publicacionX8_1, publicacionX9_1, publicacionX10_1]
+publicacionesV = [publicacionU1_2,publicacionU2_2]
 
 
 
@@ -140,12 +141,11 @@ redJ1=(usuariosJ1,relacionesJ1,[]) -- redes usadas para los ejs 1,2,3,4,5 y 10. 
 redJ2=(usuariosJ2,relacionesJ2,[])
 redJ3=(usuariosJ2,relacionesJ3,[])
 redJ4=(usuariosJ2,relacionesJ4,[])
-
 --red con publicaciones y con likes de usuarios
 redU = (usersU, [], publicacionesU) -- redes usadas para los ejs 7 y 8. Ninguno precisa de relaciones.
 --red con publicaciones pero sin likes
 redX = (usersX, [], publicacionesX)
-
+redV = (usersU, [], publicacionesV)
 
 ususariosRobertoTrue=[usJ1,usJ2,usJ3,usJ4,usJ5,usJ6,usJ7,usJ8,usJ9,usJ10,usJ11,usJ12] -- lista usuarios donde estaRobertoCarlos pueda dar True.
 usuariosNomRep=[usJ1,usJ2,usNomRep] -- lista usuarios donde dos repiten el mismo nombre.
@@ -169,7 +169,7 @@ relacionesM1 = []
 publicacionesM1 = []
 
 -- redM2 con publicaciones, publicaciones de usJ1 >= 1, pero ninguna tiene likes --  
-redM2 = (usuariosM2, relacionesM2, publicacionesM2)
+redM2 = (usuariosM2, relacionesM2, publicacionesM2)https://github.com/mariok99/MAKAKA-TESTING/blob/master/TestCatedraPropios.hs
 usuariosM2 = [usJ1, usJ2, usJ3, usJ4, usJ5, usJ6, usJ7, usJ8, usJ9, usJ10, usJ11, usJ12]
 relacionesM2 = []
 publicacionesM2 = [publicacionM10_1, publicacionM10_2, publicacionM3_2, publicacionM1_1, publicacionM1_2]
