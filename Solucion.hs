@@ -171,7 +171,6 @@ lesGustanLasMismasPublicaciones red us1 us2 = mismosElementos (publicacionesQueL
 
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
 mismosElementos xs ys = (longitud xs == longitud ys) && (incluido xs ys) && (incluido ys xs)
--- Por pedido de la especificación, mismosElementos no admite que haya repetidos en alguna lista: deben tener la misma longitud. --
 
 incluido :: (Eq t) => [t] -> [t] -> Bool
 incluido [] _ = True
