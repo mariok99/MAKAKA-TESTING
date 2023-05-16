@@ -70,7 +70,7 @@ quitarTodos t (x:xs) | not (pertenece t (x:xs)) = (x:xs)
  - la lista de usuarios que están relacionados. -}
 
 amigosDe :: RedSocial -> Usuario -> [Usuario]
-amigosDe red us = aux_amigosDe (relaciones red) us
+amigosDe red us = aux_amigosDe (relaciones red) us -- Si hay relaciones repetidas, la red no cumple con el requiere. --
 
 aux_amigosDe :: [Relacion] -> Usuario -> [Usuario]
 aux_amigosDe [] _ = []
@@ -142,7 +142,7 @@ estaRobertoCarlos ((us:users),rels,pubs) | (cantidadDeAmigos red us) > (10) = Tr
  - publicaciones que tienen como publicador al usuario ingresado. -}
 
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
-publicacionesDe red us = aux_publicacionesDe (publicaciones red) us  
+publicacionesDe red us = aux_publicacionesDe (publicaciones red) us -- Si hay publicaciones repetidas, la red no cumple con el requiere. --
 
 aux_publicacionesDe :: [Publicacion] -> Usuario -> [Publicacion]
 aux_publicacionesDe [] _ = []
@@ -155,7 +155,7 @@ aux_publicacionesDe (pub:pubs) us | us == usuarioDePublicacion pub = pub : aux_p
  - cuales el usuario ingresado pertenece a la lista de likes .-}
 
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
-publicacionesQueLeGustanA red us = pubsLikeadas (publicaciones red) us
+publicacionesQueLeGustanA red us = eliminarRepetidos(pubsLikeadas (publicaciones red) us) -- Dar multiples likes no está prohibido en las redes. --
 
 pubsLikeadas:: [Publicacion] -> Usuario -> [Publicacion]
 pubsLikeadas [] _ = []
@@ -170,7 +170,8 @@ lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones red us1 us2 = mismosElementos (publicacionesQueLeGustanA red us1) (publicacionesQueLeGustanA red us2)
 
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
-mismosElementos xs ys = (incluido xs ys) && (incluido ys xs) -- dos conjuntos A,B tienen los mismos elementos si B incluye a A y A incluye a B. --
+mismosElementos xs ys = (longitud xs == longitud ys) && (incluido xs ys) && (incluido ys xs)
+-- Por pedido de la especificación, mismosElementos no admite que haya repetidos en alguna lista: deben tener la misma longitud. --
 
 incluido :: (Eq t) => [t] -> [t] -> Bool
 incluido [] _ = True
