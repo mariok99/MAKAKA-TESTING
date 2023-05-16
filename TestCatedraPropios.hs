@@ -46,8 +46,9 @@ testSuiteEj6 = test [
 
 testSuiteEj7 = test [
     "Caso 1: no hay publicaciones en la red" ~: (publicacionesQueLeGustanA redPubsVacio usJ5) ~?= [],
-    "Caso 2: el usuario dio like" ~: (publicacionesQueLeGustanA redU usJ1) ~?= [publicacionU1_2, publicacionU2_1],
-    "Caso 3: el usuario no dio like" ~: (publicacionesQueLeGustanA redX usJ8) ~?= []
+    "Caso 2: el usuario dio un solo like a las publicaciones." ~: (publicacionesQueLeGustanA redU usJ1) ~?= [publicacionU1_2, publicacionU2_1],
+    "Caso 3: el usuario dio likes repetidas veces a las publicaciones" ~: (publicacionesQueLeGustanA redM11 usJ8) ~?= [publicacionM1_5,publicacionM6_1],
+    "Caso 4: el usuario no dio like" ~: (publicacionesQueLeGustanA redX usJ8) ~?= []
  ]
     
 testSuiteEj8 = test [
