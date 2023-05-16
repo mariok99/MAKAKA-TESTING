@@ -204,8 +204,9 @@ cantidadDeApariciones usX (us:users) | usX == us = 1 + (cantidadDeApariciones us
 
 concatenarLikesDePublicaciones :: [Publicacion] -> [Usuario] 
 concatenarLikesDePublicaciones [] = []
-concatenarLikesDePublicaciones (pub:pubs) = eliminarRepetidos (quitarTodos (usuarioDePublicacion pub) (likesDePublicacion pub)) -- quito al autor de la publicacion porque no es valido como seguidorFiel. -- 
-                                            ++ concatenarLikesDePublicaciones pubs -- agregué eliminar repetidos por si alguien dio like DOS VECES. -- 
+concatenarLikesDePublicaciones (pub:pubs) = eliminarRepetidos (quitarTodos (usuarioDePublicacion pub) (likesDePublicacion pub)) ++ concatenarLikesDePublicaciones pubs
+{- Quito al autor de la publicacion porque no es valido como seguidorFiel. 
+ - Agregué eliminar repetidos por si alguien dio like DOS VECES. -}
 
 -- 10 --
 
