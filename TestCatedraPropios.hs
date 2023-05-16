@@ -169,7 +169,7 @@ relacionesM1 = []
 publicacionesM1 = []
 
 -- redM2 con publicaciones, publicaciones de usJ1 >= 1, pero ninguna tiene likes --  
-redM2 = (usuariosM2, relacionesM2, publicacionesM2)https://github.com/mariok99/MAKAKA-TESTING/blob/master/TestCatedraPropios.hs
+redM2 = (usuariosM2, relacionesM2, publicacionesM2)
 usuariosM2 = [usJ1, usJ2, usJ3, usJ4, usJ5, usJ6, usJ7, usJ8, usJ9, usJ10, usJ11, usJ12]
 relacionesM2 = []
 publicacionesM2 = [publicacionM10_1, publicacionM10_2, publicacionM3_2, publicacionM1_1, publicacionM1_2]
