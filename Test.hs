@@ -82,7 +82,7 @@ testSuiteEj10 = test [
   " Caso recursivo 2: ambos usuarios están relacionados lejanamente" ~: (existeSecuenciaDeAmigos redJ3 usJ1 usJ11) ~?= True
  ]
 
-
+expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
 
 -- Usuarios, relaciones, publicaciones y redes usadas --
 
