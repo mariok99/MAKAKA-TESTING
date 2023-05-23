@@ -7,16 +7,20 @@ main = runTestTT tests
 
 tests = test [testSuiteEj1,testSuiteEj2,testSuiteEj3,testSuiteEj4,testSuiteEj5,testSuiteEj6,testSuiteEj7,testSuiteEj8,testSuiteEj9,testSuiteEj10]
 
+{- Todos los tests donde una función devuelve una lista no vacía, se considera correcto si 
+ - tiene los mismos elementos que UNA solución correcta. Es por eso que se testea que mismosElementos dé True.
+ - (Véase la implementación copiada y pegada de Solucion.hs debajo de los test suites) -}
+
 testSuiteEj1 = test [
   " Caso 1: lista usuario vacía" ~: (nombresDeUsuarios redUsVacio) ~?= [],
-  " Caso 2: lista de usuarios sin nombres repetidos" ~: (nombresDeUsuarios redJ1) ~?= ["Marcelo","Pepe","Ronaldo"],
-  " Caso 3: lista de usuarios con nombres repetidos" ~: (nombresDeUsuarios redNomRep) ~?= ["Marcelo","Carlos"]
+  " Caso 2: lista de usuarios sin nombres repetidos" ~: mismosElementos (nombresDeUsuarios redJ1) ["Marcelo","Pepe","Ronaldo"] ~?= True,
+  " Caso 3: lista de usuarios con nombres repetidos" ~: mismosElementos (nombresDeUsuarios redNomRep) ["Marcelo","Carlos"] ~?= True 
  ]
 
 testSuiteEj2 = test [
   " Caso 1: lista relaciones vacía" ~: (amigosDe redRelsVacio usJ1) ~?= [],
   " Caso 2: usuario no tiene amigos" ~: (amigosDe redJ1 usJ7) ~?= [],
-  " Caso 3: usuario tiene amigos" ~: (amigosDe redJ2 usJ4) ~?= [usJ1,usJ2,usJ7]
+  " Caso 3: usuario tiene amigos" ~: mismosElementos (amigosDe redJ2 usJ4) [usJ1,usJ2,usJ7] ~?= True
  ]
 
 testSuiteEj3 = test [
@@ -26,28 +30,29 @@ testSuiteEj3 = test [
  ]
 
 testSuiteEj4 = test [
-  " Caso 1: lista relaciones vacía" ~: (usuarioConMasAmigos redRelsVacio) ~?= usJ1,
+  " Caso 1: lista relaciones vacía" ~: expectAny (usuarioConMasAmigos redRelsVacio) usuariosJ1,
   " Caso 2: un único usuario con máximo de amigos" ~: (usuarioConMasAmigos redJ2) ~?= usJ4,
-  " Caso 3: varios usuarios con el máximo de amigos" ~: (usuarioConMasAmigos redJ3) ~?= usJ2
+  " Caso 3: varios usuarios con el máximo de amigos" ~: expectAny (usuarioConMasAmigos redJ3) [usJ2,usJ4,usJ5]
  ]
-
+-- estaRobertoCarlos fue alterado para dar True con más de 10 amigos, no con un millón. --
 testSuiteEj5 = test [
   " Caso 1: No hay usuario con más de 10 amigos" ~: (estaRobertoCarlos redJ1) ~?= False,
+  " Caso 3: Hay usuario con exactamente 10 amigos" ~: (estaRobertoCarlos redM2) ~?= False,
   " Caso 2: Hay usuario con más de 10 amigos" ~: (estaRobertoCarlos redRobertoTrue) ~?= True
  ]
 
 testSuiteEj6 = test [
     "Caso 1: red sin pubs, con usuarios" ~: (publicacionesDe redM1 usJ1) ~?= [],
     "Caso 2: red con pubs y user sin pubs" ~: (publicacionesDe redM3 usJ7) ~?= [],
-    "Caso 3: hay pubs de distintos usuarios en la red" ~: (publicacionesDe redM4 usJ4) ~?= [publicacionM4_1, publicacionM4_2],
-    "Caso 4: todas las pubs son del mismo usuario" ~: (publicacionesDe redM5 usJ9) ~?= publicacionesM5, 
+    "Caso 3: hay pubs de distintos usuarios en la red" ~: mismosElementos (publicacionesDe redM4 usJ4) [publicacionM4_1, publicacionM4_2] ~?= True,
+    "Caso 4: todas las pubs son del mismo usuario" ~: mismosElementos (publicacionesDe redM5 usJ9) publicacionesM5 ~?= True, 
     "Caso 5: red tiene pubs pero ninguna son del usuario de entrada" ~: (publicacionesDe redM6 usJ9) ~?= []
   ]
 
 testSuiteEj7 = test [
     "Caso 1: no hay publicaciones en la red" ~: (publicacionesQueLeGustanA redPubsVacio usJ5) ~?= [],
-    "Caso 2: el usuario dio un solo like a las publicaciones." ~: (publicacionesQueLeGustanA redU usJ1) ~?= [publicacionU1_2, publicacionU2_1],
-    "Caso 3: el usuario dio likes repetidas veces a las publicaciones" ~: (publicacionesQueLeGustanA redM11 usJ8) ~?= [publicacionM6_1,publicacionM1_5],
+    "Caso 2: el usuario dio un solo like a las publicaciones." ~: mismosElementos (publicacionesQueLeGustanA redU usJ1) [publicacionU1_2, publicacionU2_1] ~?= True,
+    "Caso 3: el usuario dio likes repetidas veces a las publicaciones" ~: mismosElementos (publicacionesQueLeGustanA redM11 usJ8) [publicacionM6_1,publicacionM1_5] ~?= True,
     "Caso 4: el usuario no dio like" ~: (publicacionesQueLeGustanA redX usJ8) ~?= []
  ]
     
@@ -57,7 +62,8 @@ testSuiteEj8 = test [
     "Caso 3: idem que 2, a uno le gusta más veces una publicación" ~: (lesGustanLasMismasPublicaciones redV usJ1 usJ4) ~?= True,
     "Caso 4: les gustan distintas publicaciones" ~: (lesGustanLasMismasPublicaciones redU usJ1 usJ2) ~?= False,
     "Caso 5: idem que 4, a uno le gusta más veces una publicación" ~: (lesGustanLasMismasPublicaciones redV usJ1 usJ2) ~?= False,
-    "Caso 6: a ninguno les gusta alguna publicación" ~: (lesGustanLasMismasPublicaciones redX usJ8 usJ9) ~?= True
+    "Caso 6: a ninguno les gusta alguna publicación" ~: (lesGustanLasMismasPublicaciones redX usJ8 usJ9) ~?= True,
+    "Caso 7: los dos usuarios son el mismo" ~: (lesGustanLasMismasPublicaciones redU usJ1 usJ1) ~?= True
  ]
 
 testSuiteEj9 = test [
@@ -83,6 +89,17 @@ testSuiteEj10 = test [
  ]
 
 expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
+
+{- mismosElementos compara longitudes y elementos. Si A = B, A incluye a B y B incluye a A.
+ - Esta función es usada para validar los casos de Test donde una función devuelve una lista.
+mismosElementos :: (Eq t) => [t] -> [t] -> Bool
+mismosElementos xs ys = (longitud xs == longitud ys) && (incluido xs ys) && (incluido ys xs)
+
+incluido :: (Eq t) => [t] -> [t] -> Bool
+incluido [] _ = True
+incluido (x:xs) ys | pertenece x ys = incluido xs ys 
+                   | otherwise = False
+ -}
 
 -- Usuarios, relaciones, publicaciones y redes usadas --
 
@@ -171,7 +188,7 @@ publicacionesM1 = []
 -- redM2 con publicaciones, publicaciones de usJ1 >= 1, pero ninguna tiene likes --  
 redM2 = (usuariosM2, relacionesM2, publicacionesM2)
 usuariosM2 = [usJ1, usJ2, usJ3, usJ4, usJ5, usJ6, usJ7, usJ8, usJ9, usJ10, usJ11, usJ12]
-relacionesM2 = []
+relacionesM2 = [(usJ1,usJ2),(usJ1,usJ3),(usJ1,usJ4),(usJ1,usJ5),(usJ1,usJ6),(usJ1,usJ7),(usJ1,usJ8),(usJ1,usJ9),(usJ1,usJ10),(usJ1,usJ11)]
 publicacionesM2 = [publicacionM10_1, publicacionM10_2, publicacionM3_2, publicacionM1_1, publicacionM1_2]
 
 -- redM3 con publicaciones y usM7 sin publicaciones--
