@@ -1,0 +1,219 @@
+module Solucion where
+
+-- Nombre de Grupo: operacionHaskell
+-- Integrante 1: Andrea Ramon Barboza Franco, franco.barboza@hotmail.com, 176/20
+-- Integrante 2: Nahuel Prieto, nahuel.rlz@gmail.com, 646/20
+-- Integrante 3: Joaquín Lozano, joaquin.lozano.trabajo@gmail.com, 649/23
+-- Integrante 4: Mario Alejandro Livia Auqui, marioalelivia@gmail.com, 642/23
+
+type Usuario = (Integer, String) -- (id, nombre)
+type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
+type Publicacion = (Usuario, String, [Usuario]) -- (usuario que publica, texto publicacion, likes)
+type RedSocial = ([Usuario], [Relacion], [Publicacion])
+
+-- Funciones basicas
+
+usuarios :: RedSocial -> [Usuario]
+usuarios (us, _, _) = us
+
+relaciones :: RedSocial -> [Relacion]
+relaciones (_, rs, _) = rs
+
+publicaciones :: RedSocial -> [Publicacion]
+publicaciones (_, _, ps) = ps
+
+idDeUsuario :: Usuario -> Integer
+idDeUsuario (id, _) = id 
+
+nombreDeUsuario :: Usuario -> String
+nombreDeUsuario (_, nombre) = nombre
+
+usuarioDePublicacion :: Publicacion -> Usuario
+usuarioDePublicacion (u, _, _) = u
+
+likesDePublicacion :: Publicacion -> [Usuario]
+likesDePublicacion (_, _, us) = us
+
+-- Ejercicios
+
+-- 1 --
+
+{- nombresDeUsuarios arma una lista con los nombres de los usuarios de red.
+ - Una vez armada la lista elimina los repetidos. -}
+
+nombresDeUsuarios :: RedSocial -> [String]
+nombresDeUsuarios red = eliminarRepetidos(armarListaNombres (usuarios red))
+
+armarListaNombres :: [Usuario] -> [String]
+armarListaNombres [] = []
+armarListaNombres (x:xs) = (nombreDeUsuario x) : (armarListaNombres xs)
+
+eliminarRepetidos :: (Eq t) => [t] -> [t]
+eliminarRepetidos [] = []
+eliminarRepetidos (x:xs) | not (pertenece x xs) = x : eliminarRepetidos xs
+                         | otherwise = x : eliminarRepetidos (quitarTodos x xs)
+                         
+pertenece :: (Eq t) => t -> [t] -> Bool
+pertenece n [] = False
+pertenece n (x:xs)  | n == x = True
+                    | otherwise = pertenece n xs
+
+quitarTodos :: (Eq t) => t -> [t] -> [t]
+quitarTodos t [] = []
+quitarTodos t (x:xs) | not (pertenece t (x:xs)) = (x:xs)
+                     | t == x = quitarTodos t xs
+                     | otherwise = x : quitarTodos t xs
+
+-- 2 --
+
+{- Al ingresar una red social válida y un usuario válido, nos devuelve
+ - la lista de usuarios que están relacionados. -}
+
+amigosDe :: RedSocial -> Usuario -> [Usuario]
+amigosDe red us = aux_amigosDe (relaciones red) us -- Si hay relaciones repetidas, la red no cumple con el requiere. --
+
+aux_amigosDe :: [Relacion] -> Usuario -> [Usuario]
+aux_amigosDe [] _ = []
+aux_amigosDe (rel:rels) us | (primero rel) == us = (segundo rel) : (aux_amigosDe rels us)
+                           | (segundo rel) == us = (primero rel) : (aux_amigosDe rels us)  -- Si ninguno se cumple, es que no era relacion del us. -- 
+                           | otherwise =  aux_amigosDe rels us 
+
+primero :: (t,t) -> t
+primero (x, y) = x
+
+segundo :: (t,t) -> t
+segundo (x, y) = y
+
+-- 3 -- 
+
+{- Al ingresar una red social válida y un usuario válido, nos devuelve
+ - la longitud de amigosDe del usuario ingresado. -}
+
+cantidadDeAmigos :: RedSocial -> Usuario -> Int
+cantidadDeAmigos red us  =  longitud (amigosDe red us)
+
+longitud :: [t] -> Int
+longitud [] = 0
+longitud (x:xs) = 1 + longitud xs
+
+-- 4 --
+
+{- Al ingresar una red social nos devuelve el primer usuario con el máximo de cantidadDeAmigos. -}
+
+usuarioConMasAmigos :: RedSocial -> Usuario
+usuarioConMasAmigos ([x],_,_) = x
+usuarioConMasAmigos ((x:xs),rels,pubs) = mayor (x,quantx) ((usuarioConMasAmigos (xs,rels,pubs)),quant2) 
+  where 
+    quantx = longitud (aux_amigosDe rels x)
+    quant2 = longitud (aux_amigosDe rels (usuarioConMasAmigos (xs,rels,pubs)))
+
+mayor :: (Usuario,Int) -> (Usuario,Int) -> Usuario
+mayor (a,b) (c,d) = if b >= d then a else c
+
+{- estaRobertoCarlos devuelve True si un usuario tiene 
+ - más de diez de amigos. -}
+
+estaRobertoCarlos :: RedSocial -> Bool
+estaRobertoCarlos ([],_,_) = False
+estaRobertoCarlos ((us:users),rels,pubs) | (cantidadDeAmigos red us) > (10) = True
+                                         | otherwise = estaRobertoCarlos (users,rels,pubs)
+                                         where red = ((us:users),rels,pubs)
+{- Debería estar implementado con 10^6 en vez de 10, pero lo cambiamos para poder testear
+ - un caso donde dé True sin crear una red con un millón + 1 tuplas de relaciones. -}
+
+-- 6 -- 
+
+{- publicacionesDe devuelve una lista que contiene únicamente las  
+ - publicaciones que tienen como publicador al usuario ingresado. -}
+
+publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
+publicacionesDe red us = aux_publicacionesDe (publicaciones red) us -- Si hay publicaciones repetidas, la red no cumple con el requiere. --
+
+aux_publicacionesDe :: [Publicacion] -> Usuario -> [Publicacion]
+aux_publicacionesDe [] _ = []
+aux_publicacionesDe (pub:pubs) us | us == usuarioDePublicacion pub = pub : aux_publicacionesDe pubs us 
+                                  | otherwise = aux_publicacionesDe pubs us
+
+-- 7 --
+
+{- Devuelve una lista con las publicaciones de la red en las  
+ - cuales el usuario ingresado pertenece a la lista de likes .-}
+
+publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
+publicacionesQueLeGustanA red us = pubsLikeadas (publicaciones red) us
+
+pubsLikeadas:: [Publicacion] -> Usuario -> [Publicacion]
+pubsLikeadas [] _ = []
+pubsLikeadas (pub:pubs) us  | pertenece us (likesDePublicacion pub) = pub : (pubsLikeadas pubs us) 
+                            | otherwise = pubsLikeadas pubs us
+-- Como pubsLikeadas sólo ve si us pertenece a una pub: si la red es válida, nunca se devuelve publicaciones repetidas. --
+
+-- 8 --
+
+{- Devuelve True si a user1 y user2 les gustan las mismas publicaciones de la red -}
+
+lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
+lesGustanLasMismasPublicaciones red us1 us2 = mismosElementos (publicacionesQueLeGustanA red us1) (publicacionesQueLeGustanA red us2)
+
+mismosElementos :: (Eq t) => [t] -> [t] -> Bool
+mismosElementos xs ys = (longitud xs == longitud ys) && (incluido xs ys) && (incluido ys xs)
+
+incluido :: (Eq t) => [t] -> [t] -> Bool
+incluido [] _ = True
+incluido (x:xs) ys | pertenece x ys = incluido xs ys 
+                   | otherwise = False
+
+-- 9 -- 
+
+{- tieneUnseguidorFiel llama a aparicionesDelikeador con las publicaciones del usuario ingresado; aparicionesDeLikeador compara
+ - las apariciones de los usuarios que dieron like en la primera publicacion en la lista de likesTotales, si alguno de estos usuarios 
+ - apareció tantas veces como publicaciones tenga el usuario ingresado, entonces devuele True, 
+ - ya que eso significa que estaba en la lista de likes de cada publicación. -}
+
+tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
+tieneUnSeguidorFiel (_,_,[]) _ = False
+tieneUnSeguidorFiel (_,_,pubs) us = estanEnTodas likesPrimera pubsDeUs 
+  where 
+    likesPrimera = if pubsDeUs /= [] then quitarTodos us (likesDePublicacion (head pubsDeUs)) else []
+    pubsDeUs = aux_publicacionesDe pubs us 
+
+estanEnTodas :: [Usuario] -> [Publicacion] -> Bool
+estanEnTodas [] _ = False
+estanEnTodas _ [] = False
+estanEnTodas (u:us) pubs = perteneceTodas u pubs || estanEnTodas us pubs
+
+perteneceTodas :: Usuario -> [Publicacion] -> Bool
+perteneceTodas us (pub:pubs) 
+    | pubs == [] = pertenece us likesPub
+    | otherwise = pertenece us likesPub && perteneceTodas us pubs
+  where
+    likesPub = likesDePublicacion pub                         
+
+-- 10 --
+
+ {- existeSecuenciaDeAmigos devuelve True cuando encuentra un usuario N que 
+  - es amigo de us2, es decir que existe la secuencia [us1,...,usN,us2].
+  - Para conseguir usN, se busca entre us1 y sus amigos. 
+  - Si ninguno cumple, se busca entre los amigos, y asì recursivamente...
+  - De esta forma, se garantiza que usN es amigo del anterior, ya que para llegar 
+  - a él se tuvo que buscar en los amigos del usuario K, para todo K entre 1 y N-1. 
+  - A su vez, en cada "búsqueda" se va eliminando de la red a todo usuario (con sus relaciones) 
+  - quien no sea amigo de us2, de forma que si no existe un usuario N, se llega
+  - eventualmente a la lista [], donde se devuelve False. -}
+
+existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
+existeSecuenciaDeAmigos red us1 us2 = estRel (relaciones red) [us1] us2
+
+estRel :: [Relacion] -> [Usuario] -> Usuario -> Bool
+estRel _ [] _ = False
+estRel rels (u:us) us2 | u == us2 = am /= []
+                       | pertenece (u,us2) rels || pertenece (us2,u) rels = True
+                       | otherwise = estRel nurels am us2 || estRel nurels us us2 
+  where
+    nurels = eliminarRelaciones rels u
+    am = aux_amigosDe rels u
+
+eliminarRelaciones :: [Relacion] -> Usuario -> [Relacion]
+eliminarRelaciones [] _ = []
+eliminarRelaciones (rel:rels) us | us == primero rel || us == segundo rel = eliminarRelaciones rels us
+                                 | otherwise = rel : (eliminarRelaciones rels us)
